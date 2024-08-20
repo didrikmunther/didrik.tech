@@ -11,7 +11,7 @@ cp -r ./out/* ./dist_static &&
 
 # Generate dynamic content, for each language file
 
-mkdir ./dist &&
+mkdir -p ./dist &&
 rm -rf ./dist/* || exit 1
 
 for entry in ./src/translation/*
