@@ -23,14 +23,13 @@ For the February European Builders' League hackathon in Stockholm, I had the opp
 With static analysis, we can infer the type of `product` and `onAdd` to provide more intelligent code generation. A VSCode extension provides the "Generate" and "Patch" code lenses for each Generate element, allowing for quick prototyping.
 
 <div class="mb-6">
-  <video autoplay loop muted playsinline class="w-full rounded-lg shadow-lg mb-3">
+  <video autoplay loop muted playsinline controls class="w-full rounded-lg shadow-lg">
     <source src="/static/blog/generact/generact-demo.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-  <div class="text-sm text-gray-600 text-center max-w-md mx-auto">
-    Using generated React components to create a shopping page. A Visual Studio Code extension provides code lenses for quick prototyping.
-  </div>
 </div>
+
+*Using generated React components to create a shopping page. A Visual Studio Code extension provides code lenses for quick prototyping.* 
 
 ### Future work
 
