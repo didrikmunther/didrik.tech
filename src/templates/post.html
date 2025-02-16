@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
+
+<!-- <script src="https://unpkg.com/jarallax@1.10/dist/jarallax.min.js"></script>
+<link rel="preload" as="script" href="https://unpkg.com/jarallax@1.10/dist/jarallax.min.js"> -->
 {% endblock %}
 
 {% block content %}
@@ -18,18 +21,18 @@
     </svg>
 
     <div class="relative mx-2 md:w-7/12 md:mx-auto">
-        <h4 class="text-blue-400 text-center uppercase text-lg font-medium">{{date}}</h4>
+        <h4 class="text-blue-400 text-center uppercase text-lg font-medium mb-4">{{date}}</h4>
         <h1 class="text-4xl md:text-6xl h1-title text-center mb-10">{{postTitle}}</h1>
     
         <div class="shadow rounded-sm overflow-hidden bg-white">
             <div class="flex justify-center items-start relative">
                 <div class="overflow-hidden w-full h-64 md:h-128">
-                    <div class="jarallax w-full h-full" data-jarallax data-speed="0.2" data-img-position="0% 0%" data-img-size="cover">
+                    <!-- <div class="jarallax w-full h-full" data-jarallax data-speed="2.0" data-img-position="50% 100%" data-img-size="cover"> -->
                         <img
-                            class="jarallax-img"
+                            class="jarallax-img w-full"
                             src="{{ coverImg }}"
                             alt="{{ title }}">
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <div class="px-8 xl:px-32 w-full absolute bottom-0 translate-y-50">
                     <div class="author-date -ml-6 left-0">
@@ -46,10 +49,9 @@
             </div>
         
             <div class="blog markdown lg:prose-xl py-16 px-8 xl:py-24 xl:px-32">
-                <!-- <div class="jarallax" data-jarallax data-speed="0.2">
-                    <img class="jarallax-img" src="{{coverImg}}" alt="">
-                </div> -->
-
+                <h1 style="margin-bottom: 60px; line-height: 2.7rem;">
+                    {% block title %}{% endblock %}
+                </h1>
                 {% block post %}{% endblock %}
             </div>
         </div>

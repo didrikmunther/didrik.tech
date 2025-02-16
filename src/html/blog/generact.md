@@ -8,9 +8,10 @@ coverImg: /static/blog/generact/generact.webp
 date: 16 February 2025
 ---
 {% extends '../../templates/post.html' %}
+{% block title %}
+Generact - A generative React component approach
+{% endblock %}
 {% block post %}
-# Generact - A generative React component approach
-
 For the February European Builders' League hackathon in Stockholm, I had the opportunity to work on a project of my choice for 48 hours. During the 48 hours, David Stålmarck, Leonid Meledin, Ivan Wely and I built a proof of concept preprocessor for React, exposing the `<Generate>` tag:
 
 ```jsx
