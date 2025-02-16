@@ -1,4 +1,5 @@
 @tailwind base;
+/* @plugin "@tailwindcss/typography"; */
 
 .w-128 {
     width: 28rem;
@@ -158,7 +159,7 @@
     justify-content: space-evenly;
 }
 
-.blog {
+/* .blog {
     @apply text-lg; }
 .blog > * {
     @apply mb-6; }
@@ -167,7 +168,7 @@
 .blog pre {
     padding: 5px;
     color: #e5eff5;
-    background: #0e1012; }
+    background: #0e1012; } */
 
 
 @keyframes mobileActive {

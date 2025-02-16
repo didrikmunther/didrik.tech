@@ -2,6 +2,7 @@ translation:
   current: de
   nav:
     home: Startseite
+    blog: Blog
     project: Projekte
     contact: Kontakt
   texts:
