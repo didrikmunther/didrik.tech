@@ -3,6 +3,7 @@ translation:
   nav:
     home: Hem
     project: Projekt
+    blog: Blog
     contact: Kontakt
   texts:
     index_slogan: En digital firma

@@ -21,7 +21,8 @@
     },
     "generate-static": {
       "patterns": [
-        "src/**"
+        "src/**",
+        "./src/pages/blog-md"
       ],
       "extensions": "html,yaml,json,md,js",
       "runOnChangeOnly": true
@@ -33,13 +34,6 @@
       ],
       "extensions": "*",
       "runOnChangeOnly": true
-    },
-    "build-md": {
-      "patterns": [
-        "./src/pages/blog-md"
-      ],
-      "extensions": "md",
-      "runOnChangeOnly": true
     }
   },
   "scripts": {
@@ -47,9 +41,8 @@
     "build-script": "babel ./src/script -d ./out/",
     "generate-static": "static-site -h ./src/helpers/*.js -b ./out -s ./src/html && cp ./out/404/index.html ./out/404.html",
     "copy-static": "mkdir -p ./out/static && rimraf ./out/static/ && cp -r ./static ./out/static && cp -r ./meta/* ./out/",
-    "build-md": "rimraf ./src/pages/blog/* && ./markdown.sh",
-    "build": "rimraf ./out/* && npm run generate-static && npm run build-md && npm run copy-static && npm run build-style && npm run build-script && echo 'Successfully built!'",
-    "build-only-dynamic": "mkdir -p ./out && rimraf ./out/* && npm run generate-static && npm run build-md && echo 'Successfully built dynamic content!'",
+    "build": "rimraf ./out/* && npm run generate-static && npm run copy-static && npm run build-style && npm run build-script && echo 'Successfully built!'",
+    "build-only-dynamic": "mkdir -p ./out && rimraf ./out/* && npm run generate-static && echo 'Successfully built dynamic content!'",
     "build-only-static": "mkdir -p ./out && rimraf ./out/* && npm run copy-static && npm run build-style && npm run build-script && echo 'Successfully built static content!'",
     "deploy": "npm run build && rimraf ../dist/* && cp -r ./dist/* ../dist && echo 'Successfully deployed!'",
     "watch": "npm-watch"
@@ -58,6 +51,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
+    "@geoffcodesthings/tailwind-md-base": "^1.1.0",
     "jarallax": "^1.12.0",
     "tailwindcss": "^2.1.1",
     "yaml": "^1.7.2"

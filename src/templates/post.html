@@ -20,17 +20,17 @@
                     <div class="jarallax w-full h-full" data-jarallax data-speed="0.2" data-img-position="0% 0%" data-img-size="cover">
                         <img
                             class="jarallax-img"
-                            src="{{coverImg}}"
-                            alt="{{title}}">
+                            src="{{ coverImg }}"
+                            alt="{{ title }}">
                     </div>
                 </div>
                 <div class="px-8 xl:px-32 w-full absolute bottom-0 translate-y-50">
                     <div class="author-date -ml-6 left-0">
                         <div class="relative inline-block cursor-pointer hover:border-blue-100">
                             <div class="text-xs absolute whitespace-no-wrap bottom-1 ml-2 right-full uppercase tracking-wide font-medium author text-red-700 left-full">{{author}}</div>
-                            <div class="text-xs absolute whitespace-no-wrap bottom-0 ml-2 left-full uppercase tracking-wide font-medium date text-gray-600">{{date}}</div>
+                            <!-- <div class="text-xs absolute whitespace-no-wrap bottom-0 ml-2 left-full uppercase tracking-wide font-medium date text-gray-600">{{date}}</div> -->
                             <img
-                                class="h-20 rounded-full border-4 border-white"
+                                class="h-20 w-20 rounded-full border-4 border-white"
                                 src="{{authorImg}}"
                                 alt="{{author}}">
                         </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
         
-            <div class="blog py-16 px-8 xl:py-24 xl:px-32">
+            <div class="blog markdown lg:prose-xl py-16 px-8 xl:py-24 xl:px-32">
                 <!-- <div class="jarallax" data-jarallax data-speed="0.2">
                     <img class="jarallax-img" src="{{coverImg}}" alt="">
                 </div> -->

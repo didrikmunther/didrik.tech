@@ -1,5 +1,10 @@
+const tailwindMdBase = require('@geoffcodesthings/tailwind-md-base');
+const tailwindMdTheme = require('./tailwind-md.config');
+
+
 module.exports = {
   theme: {
+    markdownBase: tailwindMdTheme,
     backgroundColor: theme => ({
       ...theme('colors'),
       'blue-300': '#90cdf4',
@@ -23,7 +28,9 @@ module.exports = {
     extend: {}
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    tailwindMdBase()
+  ],
   purge: [
     './src/**/*.{html,yaml}'
   ]
