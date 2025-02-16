@@ -74,12 +74,8 @@ module.exports = {
   },
 
   pre: {
-    backgroundColor: defaultTheme.colors.gray[300],
-    marginTop: defaultTheme.spacing[8],
-    marginBottom: defaultTheme.spacing[8],
-    padding: defaultTheme.spacing[4],
-    borderRadius: defaultTheme.borderRadius.default,
-    fontSize: defaultTheme.fontSize.sm,
+    marginTop: defaultTheme.spacing[6],
+    marginBottom: defaultTheme.spacing[6]
   },
 
   code: {
