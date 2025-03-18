@@ -1,10 +1,14 @@
 ---
-title: Generact - Generative React Component
+title: Generact - Generative React Components
 footerColor: bg-blue-800
-postTitle: Generact - Generative React Component
+postTitle: Generact - Generative React Components
 author: Didrik Munther
 authorImg: /static/didrik-closeup.jpg
 coverImg: /static/blog/generact/generact.webp
+coverImgPosition: left
+album:
+  - /static/blog/generact/all.jpg
+  - /static/blog/generact/stage.jpg
 date: 16 February 2025
 ---
 {% extends '../../templates/post.html' %}
