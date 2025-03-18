@@ -5,6 +5,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 
+<script src="/static/splide.min.js"></script>
+<link rel="stylesheet" href="/static/splide.min.css">
+
+
 <!-- <script src="https://unpkg.com/jarallax@1.10/dist/jarallax.min.js"></script>
 <link rel="preload" as="script" href="https://unpkg.com/jarallax@1.10/dist/jarallax.min.js"> -->
 {% endblock %}
@@ -54,6 +58,35 @@
                 </h1>
                 {% block post %}{% endblock %}
             </div>
+
+            {% if album %}
+                <!-- <hr /> -->
+                <div style="margin: 40px 0;">
+                    <div class="splide" role="group" aria-label="Splide Basic HTML Example">
+                        <div class="splide__track">
+                              <ul class="splide__list" style="max-height: 550px; height: auto;">
+                                  {% for image in album %}
+                                    <li class="splide__slide">
+                                        <img src="{{ image }}" alt="{{ title }}" style="max-width: 100%; max-height: 100%; object-fit: cover; margin: 0 auto;">
+                                    </li>
+                                  {% endfor %}
+                              </ul>
+                        </div>
+                      </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var splide = new Splide('.splide', {
+                            type: 'loop',
+                            perPage: 1,
+                            perMove: 1,
+                            gap: 10,
+                        });
+                        splide.mount();
+                    });
+                </script>
+            {% endif %}
         </div>
     </div>
 </div>

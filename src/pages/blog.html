@@ -13,7 +13,11 @@
             <div class="shadow rounded-sm overflow-hidden post">
                 <a href="{{post.url}}">
                     <div class="relative h-128 w-128 flex bg-black w-full">
-                        <div class="absolut top-0 bottom-0 bg-cover w-full h-full post-bg" style="background: url('{{post.coverImg}}'); background-size: cover;"></div>
+                        <div class="absolut top-0 bottom-0 bg-cover w-full h-full post-bg" style="
+                            background: url('{{post.coverImg}}');
+                            background-size: cover;
+                            background-position: {{post.coverImgPosition || 'center'}};
+                        "></div>
                         <!-- <img
                             class="opacity-50 max-w-none max-h-100"
                             src=""
