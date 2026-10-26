@@ -207,6 +207,50 @@
 .post:hover .post-bg {
     opacity: .3; }
 
+.post-with-companions {
+    padding-top: 144px;
+}
+
+.post-companions {
+    position: absolute;
+    z-index: 1;
+    top: 144px;
+    right: 24px;
+    display: flex;
+    gap: 16px;
+    transform: translateY(-72%);
+    pointer-events: none;
+    user-select: none;
+}
+
+.post-companions img {
+    width: 148px;
+    height: 200px;
+    object-fit: contain;
+    object-position: center bottom;
+}
+
+.post-companions img:last-child {
+    transform: translateY(-2%);
+}
+
+@media (max-width: 767px) {
+    .post-with-companions {
+        padding-top: 104px;
+    }
+
+    .post-companions {
+        top: 104px;
+        right: 16px;
+        gap: 8px;
+    }
+
+    .post-companions img {
+        width: 104px;
+        height: 144px;
+    }
+}
+
 .link {
     @apply text-blue-700; }
 .link:hover {

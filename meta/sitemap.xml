@@ -17,7 +17,7 @@
 </url>
 <url>
   <loc>https://didrik.tech/blog/</loc>
-  <lastmod>2025-02-16T15:55:41+00:00</lastmod>
+  <lastmod>2026-10-26</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
@@ -28,6 +28,11 @@
 <url>
   <loc>https://didrik.tech/blog/generact/</loc>
   <lastmod>2025-02-16T15:55:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://didrik.tech/blog/strawberry-launch/</loc>
+  <lastmod>2026-10-26</lastmod>
   <priority>0.64</priority>
 </url>
 
