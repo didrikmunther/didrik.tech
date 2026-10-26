@@ -62,6 +62,60 @@
             });
         },
         
+        // Blog eval example: progressively enhance the excerpts with tabs and copying.
+        () => document.querySelectorAll('.eval-example').forEach(example => {
+            const tabList = example.querySelector('[role="tablist"]');
+            const tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
+            const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+            const activate = index => tabs.forEach((tab, i) => {
+                tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
+                tab.tabIndex = i === index ? 0 : -1;
+                panels[i].hidden = i !== index;
+            });
+
+            tabs.forEach((tab, i) => {
+                panels[i].setAttribute('role', 'tabpanel');
+                panels[i].setAttribute('aria-labelledby', tab.id);
+                const code = panels[i].querySelector('pre');
+                code.tabIndex = 0;
+                code.setAttribute('aria-label', `${tab.textContent} code excerpt`);
+                tab.addEventListener('click', () => activate(i));
+                tab.addEventListener('keydown', event => {
+                    const target = {
+                        ArrowRight: (i + 1) % tabs.length,
+                        ArrowLeft: (i + tabs.length - 1) % tabs.length,
+                        Home: 0,
+                        End: tabs.length - 1
+                    }[event.key];
+                    if (target === undefined) return;
+                    event.preventDefault();
+                    activate(target);
+                    tabs[target].focus();
+                });
+            });
+            activate(0);
+            tabList.hidden = false;
+
+            const fullCode = example.querySelector('.eval-example-full pre');
+            fullCode.tabIndex = 0;
+            fullCode.setAttribute('aria-label', 'Full eval configuration');
+            const copyControls = example.querySelector('.eval-example-copy');
+            const copyButton = copyControls.querySelector('button');
+            const copyStatus = copyControls.querySelector('[role="status"]');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                copyControls.hidden = false;
+                copyButton.addEventListener('click', async () => {
+                    copyStatus.textContent = '';
+                    try {
+                        await navigator.clipboard.writeText(fullCode.textContent);
+                        copyStatus.textContent = 'Copied!';
+                    } catch (error) {
+                        copyStatus.textContent = 'Select the code to copy it manually.';
+                    }
+                });
+            }
+        }),
+
         /* // Disable Mobile Parallax
         () => {
             const usedLaterScript = document.createElement('script');
