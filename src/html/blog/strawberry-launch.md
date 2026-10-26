@@ -6,7 +6,13 @@ postTitle: Building memory and evaluations at Strawberry
 author: Didrik Munther
 authorImg: /static/didrik-closeup.jpg
 coverImg: /static/blog/strawberry/strawberry-team.webp
+coverImgAlt: Didrik Munther with the Strawberry team and illustrated AI companions outdoors.
+sitemapImages:
+  - /static/blog/strawberry/strawberry-home.webp
+  - /static/blog/strawberry/strawberry-memory-1.svg
 date: 26 October 2026
+datePublished: '2026-10-26'
+dateModified: '2026-10-26'
 template: ../templates/post.html
 block: post
 companions:
