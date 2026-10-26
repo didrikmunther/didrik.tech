@@ -1,15 +1,21 @@
 ---
 title: Generact - Generative React Components
+description: How Didrik Munther and his teammates built Generact, a React component generator and VS Code extension, at the European Builders' League hackathon in Stockholm.
 footerColor: bg-blue-800
 postTitle: Generact - Generative React Components
 author: Didrik Munther
 authorImg: /static/didrik-closeup.jpg
 coverImg: /static/blog/generact/generact.webp
+coverImgAlt: Visual Studio Code beside a shopping page built with Generact's generated React components.
 coverImgPosition: left
 album:
-  - /static/blog/generact/all.jpg
-  - /static/blog/generact/stage.jpg
+  - src: /static/blog/generact/all.jpg
+    alt: Didrik Munther and other participants at the European Builders' League hackathon in Stockholm.
+  - src: /static/blog/generact/stage.jpg
+    alt: Didrik Munther with two teammates at the European Builders' League hackathon in Stockholm.
 date: 16 February 2025
+datePublished: '2025-02-16'
+dateModified: '2026-10-26'
 ---
 {% extends '../../templates/post.html' %}
 {% block title %}

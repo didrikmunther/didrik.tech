@@ -37,9 +37,10 @@
     }
   },
   "scripts": {
+    "test": "NODE_ENV=production bash build.sh && node --test tests/*.test.js",
     "build-style": "postcss ./src/style/style.css -o ./out/style.css",
     "build-script": "babel ./src/script -d ./out/",
-    "generate-static": "static-site -h ./src/helpers/*.js -b ./out -s ./src/html && cp ./out/404/index.html ./out/404.html",
+    "generate-static": "static-site -h ./src/helpers/*.js -f xml txt -b ./out -s ./src/html && cp ./out/404/index.html ./out/404.html",
     "copy-static": "mkdir -p ./out/static && rimraf ./out/static/ && cp -r ./static ./out/static && cp -r ./meta/* ./out/",
     "build": "rimraf ./out/* && npm run generate-static && npm run copy-static && npm run build-style && npm run build-script && echo 'Successfully built!'",
     "build-only-dynamic": "mkdir -p ./out && rimraf ./out/* && npm run generate-static && echo 'Successfully built dynamic content!'",
