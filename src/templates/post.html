@@ -14,7 +14,12 @@
 {% endblock %}
 
 {% block content %}
-<div class="{{footerColor}} pb-4">
+<div class="mx-2 md:w-7/12 md:mx-auto">
+    <h4 class="text-blue-400 text-center uppercase text-lg font-medium mb-4">{{date}}</h4>
+    <h1 class="text-4xl md:text-6xl h1-title text-center mb-10">{{postTitle}}</h1>
+</div>
+
+<div class="{{footerColor}} pb-4 relative">
     <svg
         class="w-full absolute top-0 left-0 h-128"
         preserveAspectRatio="none"
@@ -24,10 +29,15 @@
         </polygon>
     </svg>
 
-    <div class="relative mx-2 md:w-7/12 md:mx-auto">
-        <h4 class="text-blue-400 text-center uppercase text-lg font-medium mb-4">{{date}}</h4>
-        <h1 class="text-4xl md:text-6xl h1-title text-center mb-10">{{postTitle}}</h1>
-    
+    <div class="relative mx-2 md:w-7/12 md:mx-auto {% if companions %}post-with-companions{% endif %}">
+        {% if companions %}
+        <div class="post-companions" aria-hidden="true">
+            {% for companion in companions %}
+            <img src="{{companion}}" alt="" width="148" height="200">
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <div class="shadow rounded-sm overflow-hidden bg-white">
             <div class="flex justify-center items-start relative">
                 <div class="overflow-hidden w-full h-64 md:h-128">
@@ -54,7 +64,7 @@
         
             <div class="blog markdown lg:prose-xl py-16 px-8 xl:py-24 xl:px-32">
                 <h1 style="margin-bottom: 30px; line-height: 2.7rem;">
-                    {% block title %}{% endblock %}
+                    {% block title %}{{postTitle}}{% endblock %}
                 </h1>
                 {% block post %}{% endblock %}
             </div>
