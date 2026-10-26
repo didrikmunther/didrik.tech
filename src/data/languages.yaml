@@ -1,14 +1,21 @@
 languages:
   se:
     name: 'Svenska'
+    code: sv
+    siteUrl: https://didrik.tech
     domain: null
     img: './static/flag/se.svg'
   en:
     name: 'English'
+    code: en
+    siteUrl: https://en.didrik.tech
     domain: en
     img: './static/flag/gb.svg'
   de:
     name: 'Deutsch'
+    code: de
+    # The custom domain currently has an invalid certificate.
+    siteUrl: https://de-lang-didrik.web.app
     domain: de
     img: './static/flag/de.svg'
     hidden: true
