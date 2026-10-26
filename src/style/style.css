@@ -107,35 +107,28 @@
     }
 }
 
-@keyframes author {
-    0% {
-        opacity: 0;
-        transform: translateX(70%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0)
-    }
+.post-author-name {
+    margin: 0 0 4px 8px;
+    padding: 6px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
 }
 
-.author-date .author,
-.author-date .date {
-    transition: opacity .3s ease-in-out, transform .3s ease-in-out;
-    opacity: 0;
-}
-.author-date .author {
-    transform: translateX(25%);
-}
-.author-date:hover .author {
-    opacity: 1;
-    transform: translateX(0);
-}
-.author-date .date {
-    transform: translateX(-25%);
-}
-.author-date:hover .date {
-    opacity: 1;
-    transform: translateX(0);
+@media (hover: hover) and (pointer: fine) {
+    .post-author-name {
+        opacity: 0;
+        transition: opacity 150ms ease;
+    }
+
+    .post-author:hover .post-author-name {
+        opacity: 1;
+    }
 }
 
 .h1-title {
