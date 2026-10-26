@@ -32,6 +32,6 @@ module.exports = {
     tailwindMdBase()
   ],
   purge: [
-    './src/**/*.{html,yaml}'
+    './src/**/*.{html,yaml,md}'
   ]
 }
