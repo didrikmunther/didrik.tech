@@ -9,7 +9,9 @@ const origins = {
     en: 'https://en.didrik.tech',
     de: 'https://de-lang-didrik.web.app'
 };
-const posts = ['generact', 'strawberry-launch'];
+const posts = fs.readdirSync(path.join(root, 'src/html/blog'))
+    .filter(file => file.endsWith('.md'))
+    .map(file => path.basename(file, '.md'));
 const read = (language, file) => fs.readFileSync(path.join(root, 'dist', language, file), 'utf8');
 const readPage = (language, url) => read(language, url + 'index.html');
 const head = html => html.match(/<head>([\s\S]*?)<\/head>/)[1];
@@ -63,8 +65,10 @@ for (const [language, origin] of Object.entries(origins)) {
             assert(head(html).includes(`<meta property="og:image" content="${data.image[0]}">`));
             const images = html.match(/<img\b[^>]*>/g);
             const cover = images.find(image => image.includes('class="jarallax-img'));
-            assert(cover.includes(post === 'generact' ? 'Visual Studio Code' : 'Didrik Munther'));
+            assert.match(cover, /alt="[^"]+"/);
+            if (post === 'strawberry-launch') assert(cover.includes('Didrik Munther'));
             if (post === 'generact') {
+                assert(cover.includes('Visual Studio Code'));
                 assert(!cover.includes('Didrik Munther'));
                 for (const photo of ['all.jpg', 'stage.jpg']) {
                     assert(images.find(image => image.includes(photo)).includes('alt="Didrik Munther'));
@@ -92,7 +96,9 @@ for (const [language, origin] of Object.entries(origins)) {
             assert.equal(canonical(html), url);
             if (posts.some(post => url.endsWith(`/blog/${post}/`))) {
                 const images = [...entry.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map(match => match[1]);
-                assert.equal(images.length, 3);
+                for (const image of article(html).image) {
+                    assert(images.includes(image), 'Sitemap must include the article images');
+                }
                 assert.equal(new Set(images).size, images.length);
                 for (const image of images) {
                     const imageUrl = new URL(image);
