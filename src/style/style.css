@@ -293,7 +293,39 @@
     .memory-diagram img { max-width: 280px; }
 }
 
-/* Scoped to the interactive eval example; other blog code blocks stay unchanged. */
+/* Code blocks are highlighted at build time by src/code/highlight.mjs; its theme sets the colors. */
+.markdown pre.shiki {
+    padding: 16px 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.7;
+    tab-size: 4;
+}
+
+.markdown pre.shiki code {
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    font-size: inherit;
+    color: inherit;
+}
+
+.markdown pre.shiki:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.markdown code:not(pre code) {
+    padding: 0.15em 0.4em;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    background: #f1f5f9;
+    color: #1e293b;
+    font-size: 0.875em;
+}
+
+/* Scoped to the interactive eval example. */
 .markdown .eval-example {
     margin: 1.5rem 0;
     border: 1px solid #dbe2ec;
@@ -353,9 +385,8 @@
 .markdown .eval-example pre {
     margin: 0;
     padding: 20px;
+    border-radius: 0;
     overflow: auto;
-    background: #182230;
-    color: #e2e8f0;
     tab-size: 2;
 }
 
@@ -369,17 +400,6 @@
     font-size: 13px;
     line-height: 1.8;
 }
-
-.eval-example .hljs-comment { color: #a0aec0; }
-.eval-example .hljs-keyword,
-.eval-example .hljs-literal { color: #c4b5fd; }
-.eval-example .hljs-string { color: #a7e3c3; }
-.eval-example .hljs-number { color: #f5c690; }
-.eval-example .hljs-title,
-.eval-example .hljs-built_in { color: #93c5fd; }
-.eval-example .hljs-attr,
-.eval-example .hljs-property,
-.eval-example .hljs-variable { color: #e2e8f0; }
 
 .eval-example-full summary {
     padding: 14px 20px;
