@@ -104,14 +104,14 @@
             const copyStatus = copyControls.querySelector('[role="status"]');
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 copyControls.hidden = false;
-                copyButton.addEventListener('click', async () => {
+                // Promises rather than async/await: Babel would compile async functions to
+                // code that needs regeneratorRuntime, which the page doesn't load.
+                copyButton.addEventListener('click', () => {
                     copyStatus.textContent = '';
-                    try {
-                        await navigator.clipboard.writeText(fullCode.textContent);
-                        copyStatus.textContent = 'Copied!';
-                    } catch (error) {
-                        copyStatus.textContent = 'Select the code to copy it manually.';
-                    }
+                    navigator.clipboard.writeText(fullCode.textContent).then(
+                        () => { copyStatus.textContent = 'Copied!'; },
+                        () => { copyStatus.textContent = 'Select the code to copy it manually.'; }
+                    );
                 });
             }
         }),

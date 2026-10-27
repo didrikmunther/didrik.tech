@@ -17,3 +17,8 @@ Blog front matter supplies `description`, `coverImgAlt`, ISO `datePublished` and
 `dateModified` values, and album entries with `src` and `alt`. Cover and album images
 are included automatically; use `sitemapImages` for additional images embedded in
 the article. Update modification dates when content changes, not on every build.
+
+Code blocks in Markdown are highlighted at build time with Shiki by `src/code/highlight.mjs`,
+so pages load no highlighting script. Fences can use any language Shiki bundles. To add another
+language, put its TextMate grammar in `src/code/grammars/<language>.tmLanguage.json`; the Rost
+grammar there is copied from the Rost VS Code extension.
