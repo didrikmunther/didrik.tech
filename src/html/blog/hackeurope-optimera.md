@@ -1,8 +1,8 @@
 ---
-title: 'Optimera: from slow queries to pull requests'
+title: 'Optimera at HackEurope: from slow queries to pull requests'
 description: How we built Optimera at HackEurope, connecting OpenTelemetry traces to source code so a coding agent could propose fixes for slow database queries.
 footerColor: bg-blue-800
-postTitle: 'Optimera: from slow queries to pull requests'
+postTitle: 'Optimera at HackEurope: from slow queries to pull requests'
 author: Didrik Munther
 authorImg: /static/didrik-closeup.jpg
 coverImg: /static/blog/hackeurope/optimera-dashboard.jpg
