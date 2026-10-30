@@ -18,7 +18,8 @@ module.exports = async (site, cb) => {
 				...project,
 				title: translated.title || project.title,
 				img: translated.img || project.img,
-				text: translated.text || project.text
+				text: translated.text || project.text,
+				linkDescription: translated.linkDescription || project.linkDescription
 			};
 		})
     }));

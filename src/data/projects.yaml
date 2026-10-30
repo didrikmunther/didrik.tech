@@ -48,11 +48,11 @@ projects:
   - title: '2-D Platformer Engine'
     id: 'platformer'
     img: './static/third.webp'
-    url: 'https://github.com/didrikmunther/Third'
-    target: '_blank'
+    url: '/third/'
+    linkDescription: 'Ported from 2014 C++ to WASM using 2026 Claude.'
     text:
-      - A platformer game with a build in map-editor, and modding support through Lua.
-      - The project is build in C++ with Lua as scripting language, and uses JSON to serialize.
+      - Third is a platformer engine built in C++ with a built-in map editor and Lua scripting.
+      - Play Skygarden Keep in your browser. Explore floating gardens and climb to the summit beacon. Keyboard and mouse required.
 
   - title: 'Programming language'
     id: 'rostlang'
