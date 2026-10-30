@@ -57,8 +57,8 @@ translation:
     platformer:
       title: '2D Platformer-motor'
       text:
-        - 'Ett platformer spel med möjlighet att skapa egna banor, göra egna slags fiender, "modda".'
-        - 'Projektet är byggt i C++ med Lua som skripting-språk och använder JSON för att serialisera.'
+        - 'Third är en plattformsspelmotor byggd i C++ med en inbyggd baneditor och Lua-skript.'
+        - 'Spela Skygarden Keep i webbläsaren. Utforska svävande trädgårdar och klättra upp till fyren på toppen. Tangentbord och mus krävs.'
     rustlang:
       title: 'Eget&shy;utvecklat programmerings&shy;språk'
       text:
