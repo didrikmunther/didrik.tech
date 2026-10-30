@@ -22,3 +22,15 @@ Code blocks in Markdown are highlighted at build time with Shiki by `src/code/hi
 so pages load no highlighting script. Fences can use any language Shiki bundles. To add another
 language, put its TextMate grammar in `src/code/grammars/<language>.tmLanguage.json`; the Rost
 grammar there is copied from the Rost VS Code extension.
+
+Third is hosted at `/third/`, following the other standalone demos in `meta/`.
+Its browser page and WebAssembly build are in `meta/third/` and are copied to
+every language's output by the existing build. The game starts after clicking
+Play and requires a keyboard and mouse. No game server is needed.
+
+The build is based on [Third](https://github.com/didrikmunther/Third), commit
+`4a3590e`, compiled with Emscripten 6.0.13 and bundled with the Skygarden Keep
+map. When updating the compiled game, replace `index.js`, `index.wasm` and
+`index.data` together, preserving the site's `index.html` wrapper. Serve `.wasm`
+as `application/wasm`; assets resolve relative to `/third/`. The roughly 20 MB
+game download is confined to the game page, not the article or projects listing.

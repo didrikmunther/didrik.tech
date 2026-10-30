@@ -56,9 +56,10 @@ translation:
         - 'Projektet är byggt med React baserat på Web Audio API.'
     platformer:
       title: '2D Platformer-motor'
+      linkDescription: 'Portat från C++ från 2014 till WASM med Claude från 2026.'
       text:
-        - 'Ett platformer spel med möjlighet att skapa egna banor, göra egna slags fiender, "modda".'
-        - 'Projektet är byggt i C++ med Lua som skripting-språk och använder JSON för att serialisera.'
+        - 'Third är en plattformsspelmotor byggd i C++ med en inbyggd baneditor och Lua-skript.'
+        - 'Spela Skygarden Keep i webbläsaren. Utforska svävande trädgårdar och klättra upp till fyren på toppen. Tangentbord och mus krävs.'
     rustlang:
       title: 'Eget&shy;utvecklat programmerings&shy;språk'
       text:

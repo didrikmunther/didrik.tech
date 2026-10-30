@@ -13,7 +13,7 @@ sitemapImages:
   - /static/blog/rost/rost-vscode-type-errors.webp
 date: 30 September 2024
 datePublished: '2024-09-30'
-dateModified: '2026-10-27'
+dateModified: '2026-10-30'
 template: ../templates/post.html
 block: post
 ---
@@ -35,7 +35,7 @@ My oldest GitHub repositories are small C++ games from 9th grade, like Snake and
       loading="lazy" decoding="async"
       class="w-full h-auto rounded-lg border border-gray-200">
   </a>
-  <figcaption class="mt-3 text-sm text-gray-600">Third, the 2D platformer engine where I first embedded Lua.</figcaption>
+  <figcaption class="mt-3 text-sm text-gray-600">Third, the 2D platformer engine where I first embedded Lua. <a href="/third/">Play Third in your browser.</a></figcaption>
 </figure>
 
 In October 2015, after a few experiments with Lua bindings, I added Lua scripting to Third, so things like movement, projectiles, chat, and spells could be written as Lua scripts. That's when I got interested in making languages myself. Six days later, I started DevilScript, my first language on GitHub:
