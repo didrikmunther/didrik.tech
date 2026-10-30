@@ -57,8 +57,8 @@ translation:
     platformer:
       title: '2D Platform-motor'
       text:
-        - Ein Platformespielmotor, mit der Möglichkeit deiner eigenen Karte zu bauen, und modden.
-        - Das Projekt wird in C++ mit Lua als scripting-sprache hergestellt, under verwendet JSON um zu serialisieren.
+        - Third ist eine in C++ entwickelte Plattformspiel-Engine mit integriertem Level-Editor und Lua-Skripten.
+        - Spiele Skygarden Keep im Browser. Erkunde schwebende Gärten und klettere zum Leuchtfeuer auf dem Gipfel. Tastatur und Maus erforderlich.
     rustlang:
       title: 'Programmiersprache'
       text:
