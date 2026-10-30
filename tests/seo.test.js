@@ -6,8 +6,7 @@ const { test } = require('node:test');
 const root = path.resolve(__dirname, '..');
 const origins = {
     se: 'https://didrik.tech',
-    en: 'https://en.didrik.tech',
-    de: 'https://de-lang-didrik.web.app'
+    en: 'https://en.didrik.tech'
 };
 const posts = fs.readdirSync(path.join(root, 'src/html/blog'))
     .filter(file => file.endsWith('.md'))
@@ -36,7 +35,7 @@ for (const [language, origin] of Object.entries(origins)) {
             assert(html.includes(`<html lang="${expectedLanguage}">`));
             const alternates = [...head(html).matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g)]
                 .map(match => [match[1], match[2]]);
-            assert.deepEqual(alternates, blog || language === 'de' ? [] : [
+            assert.deepEqual(alternates, blog ? [] : [
                 ['sv', origins.se + url], ['en', origins.en + url], ['x-default', origins.se + url]
             ]);
         }
