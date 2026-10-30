@@ -56,6 +56,7 @@ translation:
         - Das Projekt wird in React basierend auf die Web Audio API hergestellt.
     platformer:
       title: '2D Platform-motor'
+      linkDescription: 'Von C++ aus dem Jahr 2014 nach WASM portiert, mit Claude aus dem Jahr 2026.'
       text:
         - Third ist eine in C++ entwickelte Plattformspiel-Engine mit integriertem Level-Editor und Lua-Skripten.
         - Spiele Skygarden Keep im Browser. Erkunde schwebende Gärten und klettere zum Leuchtfeuer auf dem Gipfel. Tastatur und Maus erforderlich.

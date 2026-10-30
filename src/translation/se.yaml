@@ -56,6 +56,7 @@ translation:
         - 'Projektet är byggt med React baserat på Web Audio API.'
     platformer:
       title: '2D Platformer-motor'
+      linkDescription: 'Portat från C++ från 2014 till WASM med Claude från 2026.'
       text:
         - 'Third är en plattformsspelmotor byggd i C++ med en inbyggd baneditor och Lua-skript.'
         - 'Spela Skygarden Keep i webbläsaren. Utforska svävande trädgårdar och klättra upp till fyren på toppen. Tangentbord och mus krävs.'
