@@ -49,6 +49,7 @@ projects:
     id: 'platformer'
     img: './static/third.webp'
     url: '/third/'
+    linkDescription: 'Ported from 2014 C++ to WASM using 2026 Claude.'
     text:
       - Third is a platformer engine built in C++ with a built-in map editor and Lua scripting.
       - Play Skygarden Keep in your browser. Explore floating gardens and climb to the summit beacon. Keyboard and mouse required.
