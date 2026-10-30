@@ -4,7 +4,7 @@ This is the static page generator code for the webpage <http://didrik.tech>.
 
 Hosting is done with firebase.
 
-Run `npm test` to build all three languages and check canonical URLs, article metadata,
+Run `npm test` to build Swedish and English and check canonical URLs, article metadata,
 image references, and sitemaps. This does not deploy the site.
 
 SEO metadata is assembled in `src/helpers/seo.js`. Public origins and language codes
