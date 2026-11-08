@@ -6,31 +6,27 @@ translation:
     project: Projects
     contact: Contact
   texts:
-    index_slogan: A digital company
-    index_description: Development and maintenance of websites, web-apps, and technical systems
+    index_slogan: Software engineer in Stockholm
+    index_description: I build AI agents, developer tools and web apps.
     me_title: Hello, I'm Didrik!
     project_show: Show project
     err_404: Page not found
     contact: Contact
-    contact_your_project: Your project
+    contact_your_project: Send a message
     contact_your_name: Name
     contact_your_mail: Email
     contact_your_phone: Phone
     contact_your_company: Company
-    contact_tell_more: Tell me more about your project
-    contact_budget: Budget
+    contact_tell_more: Message
     contact_send: Send
   paragraphs:
     me_description: >
-      I'm a talented programmer with over 12 years of programming experience.
+      I'm a software engineer at [Strawberry](/blog/strawberry-launch/), where we build AI companions for people who aren't developers. I work on how they behave: the memory that lets them remember what matters to you, and the evaluations that show whether a change makes them better.
 
 
-      I'm taking my Masters in Software Development at KTH Royal Institute of Technology in Stockholm, Sweden. Right now I'm doing an exchange semester at TUM in Munich, Germany. When I'm not in school, I'm working on projects for my customers and on my own [personal projects](/projects).
+      I have a master's in Computer Science from KTH, where I focused on software engineering, formal languages and machine learning. My thesis grew out of [Rost](/blog/rost/), the programming language I've been building in Rust. I've been programming for more than a decade, from C++ games to an optical race-timing system and [hackathon projects](/blog/).
 
 
-      I love to learn new things and to challenge myself. I'm a quick learner, and I have no problems with having many balls in the air.
-
-
-      Do you have a website or an app that needs to be created? Or do you need to streamline your business system? Feel free to [contact me](/contact) if you've got a job that fits my skills!
+      Want to talk about agents, programming languages or something you're building? [Get in touch](/contact).
     contact: >
       Feel free to contact me by phone or by email. You can also use the contact form below.
