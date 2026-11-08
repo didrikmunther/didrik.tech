@@ -5,7 +5,8 @@ module.exports = async (site, cb) => {
 
     site = site.map(v => ({
         ...v,
-		version
+		version,
+		year: new Date().getFullYear()
     }));
 
     cb(null, site);
