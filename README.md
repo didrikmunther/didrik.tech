@@ -2,16 +2,18 @@
 
 This is the static page generator code for the webpage <http://didrik.tech>.
 
-Hosting is done with firebase.
+Hosting is done with firebase. The site is in English: `deploy.sh` builds it into
+`../dist/en`, which Firebase serves at didrik.tech. The Firebase config is in the
+didrik.tech.firebase repo, which includes this repo as a submodule. It redirects
+en.didrik.tech and the old Swedish paths `/projekt` and `/kontakt` to the English
+pages, so update it when moving pages.
 
-Run `npm test` to build Swedish and English and check canonical URLs, article metadata,
-image references, and sitemaps. This does not deploy the site.
+Run `npm test` to build the site and check canonical URLs, article metadata,
+image references, and the sitemap. This does not deploy the site.
 
-SEO metadata is assembled in `src/helpers/seo.js`. Public origins and language codes
-live in `src/data/languages.yaml`; hidden languages are omitted from language alternatives.
-The shared English blog uses `didrik.tech` as its canonical host, while translated
-pages use their language's origin. Each build generates its own `robots.txt` and
-`sitemap.xml`, containing only that host's canonical pages.
+SEO metadata is assembled in `src/helpers/seo.js`. The site's public origin and
+language code live in `src/data/languages.yaml`. The build generates `robots.txt`
+and a `sitemap.xml` listing every canonical page.
 
 Blog front matter supplies `description`, `coverImgAlt`, ISO `datePublished` and
 `dateModified` values, and album entries with `src` and `alt`. Cover and album images
@@ -25,7 +27,7 @@ grammar there is copied from the Rost VS Code extension.
 
 Third is hosted at `/third/`, following the other standalone demos in `meta/`.
 Its browser page and WebAssembly build are in `meta/third/` and are copied to
-every language's output by the existing build. The game starts after clicking
+the site's output by the existing build. The game starts after clicking
 Play and requires a keyboard and mouse. No game server is needed.
 
 The build is based on [Third](https://github.com/didrikmunther/Third), commit

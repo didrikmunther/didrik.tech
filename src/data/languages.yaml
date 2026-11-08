@@ -1,13 +1,4 @@
 languages:
-  se:
-    name: 'Svenska'
-    code: sv
-    siteUrl: https://didrik.tech
-    domain: null
-    img: './static/flag/se.svg'
   en:
-    name: 'English'
     code: en
-    siteUrl: https://en.didrik.tech
-    domain: en
-    img: './static/flag/gb.svg'
+    siteUrl: https://didrik.tech
