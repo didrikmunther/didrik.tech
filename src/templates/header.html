@@ -42,24 +42,6 @@
             </a>
             <p class="hidden md:block text-lg uppercase tracking-wider font-thin">IT & Datakonsult</p>
         </div>
-        
-        <div id="language" class="dropdown md:absolute relative flex-auto flex justify-end h-full w-16 p-3 flex top-0 md:right-4 md:hover:bg-gray-100 md:cursor-pointer">
-            <img class="w-10" src="{{ activeLanguage.img }}" alt="">
-            <ul class="absolute left-0 md:left-auto w-full top-full md:w-40 z-30 md:right-0 md:bg-gray-100 bg-gray-200">
-                {% for lang in languages %}
-                <li>
-                    <a href="{{ getDomainRedirect(lang.domain) }}">
-                        <div class="flex items-center p-3 hover:bg-gray-400">
-                            <img
-                                class="mr-4 w-10"
-                                src="{{ lang.img }}" alt="">
-                            <div>{{ lang.name }}</div>
-                        </div>
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
 
         {% include 'nav.html' %}
     </div>

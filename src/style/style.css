@@ -468,24 +468,6 @@
     @apply underline;
 }
 
-@media (min-width: 768px) {
-    .md\:right-4 {
-        right: 1rem;
-    }
-
-    .md\:right-0 {
-        right: 0;
-    }
-}
-
-.dropdown > ul {
-    @apply hidden;
-}
-
-.dropdown:hover > ul {
-    @apply block;
-}
-
 @tailwind components;
 @tailwind utilities;
 
