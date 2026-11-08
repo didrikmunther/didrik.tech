@@ -6,28 +6,21 @@ module.exports = async (site, cb) => {
             getYaml('../data/languages.yaml'),
             getYaml('../data/translation.yaml')
         ]);
-        const current = languages[translation.current];
-        const primaryOrigin = languages.se.siteUrl;
-        const publicLanguages = Object.values(languages).filter(language => !language.hidden);
-        const absoluteUrl = (path, origin) => new URL(path, origin).href;
+        const { code: language, siteUrl } = languages[translation.current];
+        const absoluteUrl = path => new URL(path, siteUrl).href;
 
         const pages = site.map(page => {
             if (!page.url.endsWith('/')) return page;
 
-            // Blog content is English and shared across language shells and Firebase mirrors.
-            const isBlog = page.url.startsWith('/blog/');
-            const isPost = Boolean(page.postTitle);
-            const origin = isBlog ? primaryOrigin : current.siteUrl;
-            const canonicalUrl = absoluteUrl(page.url, origin);
+            const canonicalUrl = absoluteUrl(page.url);
             const featuredImages = [page.coverImg, ...(page.album || []).map(image => image.src)]
-                .filter(Boolean).map(image => absoluteUrl(image, origin));
+                .filter(Boolean).map(image => absoluteUrl(image));
             const images = [...new Set([
                 ...featuredImages,
-                ...(page.sitemapImages || []).map(image => absoluteUrl(image, origin))
+                ...(page.sitemapImages || []).map(image => absoluteUrl(image))
             ])];
-            const language = isBlog ? 'en' : current.code;
             const description = page.description || 'Didrik Munther IT & Datakonsult AB';
-            const article = isPost ? {
+            const article = page.postTitle ? {
                 '@context': 'https://schema.org',
                 '@type': 'BlogPosting',
                 headline: page.postTitle,
@@ -41,8 +34,8 @@ module.exports = async (site, cb) => {
                 author: {
                     '@type': 'Person',
                     name: page.author,
-                    url: primaryOrigin + '/',
-                    image: absoluteUrl(page.authorImg, primaryOrigin)
+                    url: siteUrl + '/',
+                    image: absoluteUrl(page.authorImg)
                 }
             } : null;
 
@@ -54,13 +47,6 @@ module.exports = async (site, cb) => {
                     description,
                     imageUrl: featuredImages[0],
                     images,
-                    alternates: isBlog || current.hidden ? [] : [
-                        ...publicLanguages.map(language => ({
-                            language: language.code,
-                            url: absoluteUrl(page.url, language.siteUrl)
-                        })),
-                        { language: 'x-default', url: absoluteUrl(page.url, primaryOrigin) }
-                    ],
                     // Keep content such as </script> inside the JSON-LD data block.
                     articleJson: article ? JSON.stringify(article).replace(/</g, '\\u003c') : null
                 }
@@ -68,15 +54,14 @@ module.exports = async (site, cb) => {
         });
 
         const sitemapEntries = pages
-            .filter(page => page.seo && page.sitemap !== false &&
-                new URL(page.seo.canonicalUrl).origin === current.siteUrl)
+            .filter(page => page.seo && page.sitemap !== false)
             .map(page => ({
                 url: page.seo.canonicalUrl,
                 lastmod: page.dateModified || page.datePublished,
                 images: page.seo.images
             }));
 
-        cb(null, pages.map(page => ({ ...page, siteUrl: current.siteUrl, sitemapEntries })));
+        cb(null, pages.map(page => ({ ...page, siteUrl, sitemapEntries })));
     } catch (error) {
         cb(error);
     }
