@@ -1,5 +1,5 @@
 <main>
-    <section class="m-auto py-40 relative bg-gray-800">
+    <section class="m-auto pt-40 pb-24 relative bg-gray-800">
       <svg
         class="w-full absolute top-0 left-0 h-128"
         preserveAspectRatio="none"
@@ -9,25 +9,42 @@
         </polygon>
       </svg>
 
-      {% for project in projects %}
-        <div class="flex flex-wrap relative w-4/5 mx-auto my-0 flex items-center md:mb-56 mb-32">
-          <div class="w-full z-10 md:w-1/2">
-            <img class="shadow rounded-sm" src="{{project.img}}" alt="{{project.title|safe}}" loading="lazy">
-          </div>
-          <div class="w-full md:z-20 md:w-1/2 p-12 bg-red-800 -m-12 text-white shadow rounded-sm">
-            <h1 class="leading-normal md:leading-normal text-2xl md:text-3xl mt-6 md:mt-0 md:text-5xl font-bold uppercase tracking-wider .break-word">{{project.title|safe}}</h1>
-            <hr class="my-5">
-            {% for paragraph in project.text %}
-            <p class="mb-4 text-lg tracking-wide">{{paragraph}}</p>
-            {% endfor %}
-            <a href="{{project.url}}" target="{{project.target}}"{% if project.linkDescription %} aria-describedby="project-{{project.id}}-description"{% endif %}>
-              <div class="mt-4 p-4 font-bold text-blue-700 bg-white inline-block">{{ translation.texts.project_show }}</div>
-            </a>
-            {% if project.linkDescription %}
-            <p id="project-{{project.id}}-description" class="mt-3 text-sm leading-relaxed">{{project.linkDescription}}</p>
-            {% endif %}
-          </div>
-        </div>
-      {% endfor %}
+      <div class="timeline relative w-4/5 mx-auto">
+        {% for project in projects %}
+          {% if project.year %}
+            <div class="timeline-row {% if loop.index0 % 2 == 0 %}timeline-left{% else %}timeline-right{% endif %}" data-year="{{project.year}}">
+              <div class="timeline-dot" aria-hidden="true"></div>
+              <div class="timeline-year">{{project.year}}</div>
+              <div class="timeline-card bg-red-800 text-white shadow rounded-sm">
+                <img src="{{project.img}}" alt="{{project.title|safe}}" loading="lazy">
+                <div class="timeline-body p-8 md:p-10">
+                  <h2 class="leading-normal md:leading-normal text-2xl md:text-3xl font-bold uppercase tracking-wider break-word">{{project.title|safe}}</h2>
+                  <hr class="my-5">
+                  {% for paragraph in project.text %}
+                  <p class="mb-4 text-lg tracking-wide">{{paragraph}}</p>
+                  {% endfor %}
+                  <p class="timeline-tech">{{project.tech}}</p>
+                  <a href="{{project.url}}"{% if project.target %} target="{{project.target}}"{% endif %}{% if project.linkDescription %} aria-describedby="project-{{project.id}}-description"{% endif %}>
+                    <div class="mt-4 p-4 font-bold text-blue-700 bg-white inline-block">{{ translation.texts.project_show }}</div>
+                  </a>
+                  {% if project.linkDescription %}
+                  <p id="project-{{project.id}}-description" class="mt-3 text-sm leading-relaxed">{{project.linkDescription}}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="timeline-closing">
+              <h2 class="text-xl md:text-2xl font-bold uppercase tracking-wider text-white">{{project.title|safe}}</h2>
+              {% for paragraph in project.text %}
+              <p class="mt-3 text-lg tracking-wide text-gray-400">{{paragraph}}</p>
+              {% endfor %}
+              <a href="{{project.url}}"{% if project.target %} target="{{project.target}}"{% endif %}>
+                <div class="mt-5 p-4 font-bold text-blue-700 bg-white inline-block">{{ translation.texts.project_show }}</div>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
     </section>
 </main>

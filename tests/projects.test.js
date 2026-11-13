@@ -36,3 +36,37 @@ test('projects linking to a blog post stay in the same tab', () => {
         assert.equal(project.target, undefined, `${project.id} links to a post on this site`);
     }
 });
+
+const html = fs.readFileSync(path.join(site, 'projects/index.html'), 'utf8');
+
+test('rows alternate sides down the line', () => {
+    const sides = [...html.matchAll(/timeline-row timeline-(left|right)/g)].map(match => match[1]);
+    assert.equal(sides.length, 12);
+    sides.forEach((side, index) => assert.equal(side, index % 2 === 0 ? 'left' : 'right'));
+});
+
+test('each dated row has one dot and one visible year', () => {
+    const rows = html.split('timeline-row').slice(1, 13);
+    assert.equal(rows.length, 12);
+    for (const row of rows) {
+        assert.equal((row.match(/timeline-dot/g) || []).length, 1);
+        assert.match(row, /timeline-year[^>]*>\s*\d{4}/);
+    }
+});
+
+test('the Third card keeps its link description wiring', () => {
+    assert(html.includes('aria-describedby="project-platformer-description"'));
+    assert(html.includes('id="project-platformer-description"'));
+});
+
+test('the closing card renders without a dot, year, image or tech element', () => {
+    assert(html.includes('timeline-closing'));
+    const closing = html.slice(html.indexOf('timeline-closing'), html.indexOf('</main>'));
+    for (const marker of ['timeline-dot', 'timeline-year', 'timeline-tech', '<img'])
+        assert(!closing.includes(marker), `the closing card must not contain ${marker}`);
+});
+
+test('no project renders an empty tech element', () => {
+    assert.equal((html.match(/timeline-tech/g) || []).length, 12);
+    assert(!/timeline-tech[^>]*>\s*</.test(html));
+});
