@@ -1,6 +1,115 @@
 projects:
+  - title: 'Optimera'
+    id: 'optimera'
+    year: '2026'
+    tech: 'OpenTelemetry · Django · React'
+    img: './static/blog/hackeurope/optimera-dashboard.jpg'
+    url: '/blog/hackeurope-optimera/'
+    text:
+      - 'Built at HackEurope: a prototype that reads application traces, finds the database queries making a page slow, and asks a coding agent to propose a fix.'
+      - The stack was OpenTelemetry and Jaeger for traces, a Django backend to scan them, and a React dashboard for the incidents.
+
+  - title: 'CalliQ'
+    id: 'calliq'
+    year: '2025'
+    tech: 'Python · Azure AI Speech · LangGraph'
+    img: './static/blog/calliq/calliq-scam-call-warning.jpg'
+    url: '/blog/calliq/'
+    text:
+      - An AI tool that listens to a phone call and warns the person when it looks like a scam, explaining what sounds risky rather than raising a generic alarm.
+      - Runner-up out of more than 250 entries at the SSE Business Lab × Microsoft × KTH AI Society Hackathon.
+
+  - title: 'Generact'
+    id: 'generact'
+    year: '2025'
+    tech: 'React · TypeScript · VS Code'
+    img: './static/blog/generact/generact.webp'
+    url: '/blog/generact/'
+    text:
+      - A React preprocessor that turns a <Generate> tag into a real component, with static analysis to infer the props it should take.
+      - A VS Code extension adds Generate and Patch code lenses. Built in 48 hours at the European Builders' League in Stockholm.
+
+  - title: 'Miking LSP'
+    id: 'mikinglsp'
+    year: '2024'
+    tech: 'Miking · MCore · LSP'
+    img: './static/mikinglsp.webp'
+    url: 'https://marketplace.visualstudio.com/items?itemName=didrikmunther.mcore'
+    target: '_blank'
+    text:
+      - Language Server support generated automatically for domain-specific languages written in the Miking framework.
+      - A DSL gets hover types, go to definition, workspace symbols and code lenses without anyone writing a language server by hand.
+
+  - title: 'Programming language'
+    id: 'rostlang'
+    year: '2022'
+    tech: 'Rust'
+    img: './static/rustlang.webp'
+    url: 'https://github.com/didrikmunther/rost'
+    target: '_blank'
+    text:
+      - A statically typed compiled language with support for arithmetic, functions, and lists.
+      - The project is build in Rust with the Recursive Descent Parser.
+
+  - title: 'Web Audio API Synth'
+    id: 'websynth'
+    year: '2020'
+    tech: 'React · Web Audio'
+    img: './static/audio.webp'
+    url: '/audio'
+    target: '_blank'
+    text:
+      - A digital synthensizer with an oscillator and plugins with support for external MIDI-units.
+      - The project is build with React based on the Web Audio API.
+
+  - title: 'Flappy Bird AI'
+    id: 'flappy'
+    year: '2020'
+    tech: 'TypeScript'
+    img: './static/flappy.webp'
+    url: '/flappy'
+    target: '_blank'
+    text:
+      - An evolutionary neural network which learns to play Flappy Bird in the browser.
+      - The project is build with TypeScript.
+
+  - title: 'Rust browser engine'
+    id: 'rustbrowser'
+    year: '2018'
+    tech: 'Rust'
+    img: './static/rustbrowser.webp'
+    url: 'https://github.com/didrikmunther/Rust_browser_engine'
+    target: '_blank'
+    text:
+      - An HTML and CSS parser with a layout engine, written in Rust to find out what a browser actually does between the markup and the pixels.
+      - It lexes a page into a DOM tree, parses the stylesheet into selectors, and matches the two.
+
+  - title: 'KTH Formula Student'
+    id: 'kthfs'
+    year: '2018'
+    tech: 'PHP · MySQL · Directus'
+    img: './static/kthformulastudent.webp'
+    url: 'https://www.kthformulastudent.se/'
+    target: '_blank'
+    text:
+      - A mostly static webpage with information about the teams members, sponsors, news, and recruitment etc.
+      - The page is built with PHP and MySQL with Directus as CMS.
+
+  - title: 'Nya Hjul & Däckorder'
+    id: 'nh'
+    year: '2018'
+    tech: 'Angular · PHP'
+    img: './static/nyahjul.webp'
+    # url: './blog/nya-hjul-dack-order'
+    url: 'https://nyahjul.se/'
+    target: '_blank'
+    text:
+      - A sibling of Valla Däck built on the same codebase, but more concerned with B2B functions such as tire hotels, order management, and price administration.
+
   - title: 'Valla Däck'
     id: 'vd'
+    year: '2018'
+    tech: 'Angular · PHP · Klarna'
     img: './static/valladack.webp'
     # url: './blog/valla-dack'
     url: 'https://valladack.se/'
@@ -9,44 +118,10 @@ projects:
       - An e-shop for everything that's got to do with wheels. The site allows for filtering of the products properties, and allows payment through Klarna.
       - The project consisted of building a website with the necessary modules in Angular 6 and a Klarna system in PHP
 
-  - title: 'Nya Hjul & Däckorder'
-    id: 'nh'
-    img: './static/nyahjul.webp'
-    # url: './blog/nya-hjul-dack-order'
-    url: 'https://nyahjul.se/'
-    target: '_blank'
-    text:
-      - A similar site to the one above, however more concerned with B2B functions such as tire hotels, order management, and price administration.
-
-  - title: 'KTH Formula Student'
-    id: 'kthfs'
-    img: './static/kthformulastudent.webp'
-    url: 'https://www.kthformulastudent.se/'
-    target: '_blank'
-    text:
-      - A mostly static webpage with information about the teams members, sponsors, news, and recruitment etc.
-      - The page is built with PHP and MySQL with Directus as CMS.
-
-  - title: 'Flappy Bird AI'
-    id: 'flappy'
-    img: './static/flappy.webp'
-    url: '/flappy'
-    target: '_blank'
-    text:
-      - An evolutionary neural network which learns to play Flappy Bird in the browser.
-      - The project is build with TypeScript.
-
-  - title: 'Web Audio API Synth'
-    id: 'websynth'
-    img: './static/audio.webp'
-    url: '/audio'
-    target: '_blank'
-    text:
-      - A digital synthensizer with an oscillator and plugins with support for external MIDI-units.
-      - The project is build with React based on the Web Audio API.
-
   - title: '2-D Platformer Engine'
     id: 'platformer'
+    year: '2014'
+    tech: 'C++ · Lua · WebAssembly'
     img: './static/third.webp'
     url: '/third/'
     linkDescription: 'Ported from 2014 C++ to WASM using 2026 Claude.'
@@ -54,18 +129,8 @@ projects:
       - Third is a platformer engine built in C++ with a built-in map editor and Lua scripting.
       - Play Skygarden Keep in your browser. Explore floating gardens and climb to the summit beacon. Keyboard and mouse required.
 
-  - title: 'Programming language'
-    id: 'rostlang'
-    img: './static/rustlang.webp'
-    url: 'https://github.com/didrikmunther/rost'
-    target: '_blank'
-    text:
-      - A statically typed compiled language with support for arithmetic, functions, and lists.
-      - The project is build in Rust with the Recursive Descent Parser.
-
   - title: 'More projects on GitHub'
     id: 'more'
-    img: './static/github.webp'
     url: 'https://github.com/didrikmunther'
     target: '_blank'
     text:
