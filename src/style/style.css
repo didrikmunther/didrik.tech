@@ -457,7 +457,12 @@
 } */
 
 /* Projects timeline: a red spine with cards alternating down it. */
+.timeline {
+    padding-top: 6rem;
+}
+
 .timeline:before {
+    top: 6rem;
     content: '';
     position: absolute;
     top: 0;
@@ -528,7 +533,7 @@
     text-align: center;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
     .timeline:before {
         left: 7px;
         bottom: 5rem;

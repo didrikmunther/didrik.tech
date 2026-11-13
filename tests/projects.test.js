@@ -70,3 +70,12 @@ test('no project renders an empty tech element', () => {
     assert.equal((html.match(/timeline-tech/g) || []).length, 12);
     assert(!/timeline-tech[^>]*>\s*</.test(html));
 });
+
+test('every project paragraph is text, not a mangled YAML mapping', () => {
+    for (const project of projects) {
+        for (const paragraph of project.text) {
+            assert.equal(typeof paragraph, 'string', `${project.id} has a non-string paragraph`);
+        }
+    }
+    assert(!html.includes('[object Object]'));
+});

@@ -6,7 +6,7 @@ projects:
     img: './static/blog/hackeurope/optimera-dashboard.jpg'
     url: '/blog/hackeurope-optimera/'
     text:
-      - Built at HackEurope: a prototype that reads application traces, finds the database queries making a page slow, and asks a coding agent to propose a fix.
+      - 'Built at HackEurope: a prototype that reads application traces, finds the database queries making a page slow, and asks a coding agent to propose a fix.'
       - The stack was OpenTelemetry and Jaeger for traces, a Django backend to scan them, and a React dashboard for the incidents.
 
   - title: 'CalliQ'
@@ -26,7 +26,7 @@ projects:
     img: './static/blog/generact/generact.webp'
     url: '/blog/generact/'
     text:
-      - A React preprocessor that turns a `<Generate>` tag into a real component, with static analysis to infer the props it should take.
+      - A React preprocessor that turns a <Generate> tag into a real component, with static analysis to infer the props it should take.
       - A VS Code extension adds Generate and Patch code lenses. Built in 48 hours at the European Builders' League in Stockholm.
 
   - title: 'Miking LSP'
