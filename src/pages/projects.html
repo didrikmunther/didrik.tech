@@ -20,9 +20,9 @@
               <div class="timeline-dot" aria-hidden="true"></div>
               <div class="timeline-year">{{project.year}}</div>
               <div class="timeline-card bg-red-800 text-white shadow rounded-sm">
-                <img src="{{project.img}}" alt="{{project.title|safe}}" loading="lazy">
+                <img src="{{project.img}}" alt="{{project.title|safe}}" width="{{project.imgWidth}}" height="{{project.imgHeight}}"{% if not loop.first %} loading="lazy"{% endif %}>
                 <div class="timeline-body p-8 md:p-10">
-                  <h2 class="leading-normal md:leading-normal text-2xl md:text-3xl font-bold uppercase tracking-wider break-word">{{project.title|safe}}</h2>
+                  <h2 class="leading-normal md:leading-normal text-2xl md:text-3xl font-bold uppercase tracking-wider break-words">{{project.title|safe}}</h2>
                   <hr class="my-5">
                   {% for paragraph in project.text %}
                   <p class="mb-4 text-lg tracking-wide">{{paragraph}}</p>
