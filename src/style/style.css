@@ -456,6 +456,117 @@
     margin-right: 8px;
 } */
 
+/* Projects timeline: a red spine with cards alternating down it. */
+.timeline {
+    padding-top: 3rem;
+}
+
+.timeline:before {
+    content: '';
+    position: absolute;
+    top: 5rem;
+    bottom: 11rem;
+    left: 50%;
+    width: 4px;
+    margin-left: -2px;
+    background: #9b2c2c;
+}
+
+.timeline-row {
+    position: relative;
+    display: flex;
+    margin-bottom: 7rem;
+}
+
+.timeline-left { justify-content: flex-start; }
+.timeline-right { justify-content: flex-end; }
+
+.timeline-dot {
+    position: absolute;
+    top: 2.5rem;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    margin-left: -11px;
+    border: 5px solid #9b2c2c;
+    border-radius: 9999px;
+    background: #fdfdfd;
+    z-index: 2;
+}
+
+.timeline-year {
+    position: absolute;
+    top: 1.9rem;
+    color: #fdfdfd;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    line-height: 1;
+}
+
+.timeline-left .timeline-year { left: calc(50% + 2.5rem); }
+.timeline-right .timeline-year { right: calc(50% + 2.5rem); }
+
+.timeline-card {
+    width: calc(50% - 3.5rem);
+    overflow: hidden;
+}
+
+.timeline-card img {
+    display: block;
+    width: 100%;
+}
+
+.timeline-tech {
+    margin-bottom: 0;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    opacity: .85;
+}
+
+.timeline-closing {
+    position: relative;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+@media (max-width: 1023px) {
+    .timeline:before {
+        left: 7px;
+        bottom: 5rem;
+        margin-left: 0;
+    }
+
+    .timeline-row {
+        margin-bottom: 4rem;
+        padding-left: 2.5rem;
+        flex-direction: column;
+    }
+
+    .timeline-dot {
+        top: .4rem;
+        left: 0;
+        margin-left: -4px;
+    }
+
+    .timeline-year,
+    .timeline-left .timeline-year,
+    .timeline-right .timeline-year {
+        position: static;
+        margin-bottom: 1rem;
+        font-size: 1.6rem;
+    }
+
+    .timeline-card { width: 100%; }
+
+    .timeline-closing {
+        padding-left: 2.5rem;
+        text-align: left;
+    }
+}
+
 .paragraphs > p {
     @apply mb-4;
 }
