@@ -79,3 +79,16 @@ test('every project paragraph is text, not a mangled YAML mapping', () => {
     }
     assert(!html.includes('[object Object]'));
 });
+
+test('the page has exactly one top-level heading', () => {
+    assert.equal((html.match(/<h1\b/g) || []).length, 1);
+});
+
+test('no project text points at its neighbour by position', () => {
+    for (const project of projects) {
+        for (const paragraph of project.text) {
+            assert(!/\bthe one (above|below)\b/i.test(paragraph),
+                `${project.id} refers to a neighbour by position, which the timeline order changes`);
+        }
+    }
+});

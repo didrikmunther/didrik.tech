@@ -458,15 +458,14 @@
 
 /* Projects timeline: a red spine with cards alternating down it. */
 .timeline {
-    padding-top: 6rem;
+    padding-top: 3rem;
 }
 
 .timeline:before {
-    top: 6rem;
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 7rem;
+    top: 5rem;
+    bottom: 11rem;
     left: 50%;
     width: 4px;
     margin-left: -2px;

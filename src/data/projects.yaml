@@ -104,7 +104,7 @@ projects:
     url: 'https://nyahjul.se/'
     target: '_blank'
     text:
-      - A similar site to the one above, however more concerned with B2B functions such as tire hotels, order management, and price administration.
+      - A sibling of Valla Däck built on the same codebase, but more concerned with B2B functions such as tire hotels, order management, and price administration.
 
   - title: 'Valla Däck'
     id: 'vd'
