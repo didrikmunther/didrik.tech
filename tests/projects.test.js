@@ -39,18 +39,42 @@ test('projects linking to a blog post stay in the same tab', () => {
 
 const html = fs.readFileSync(path.join(site, 'projects/index.html'), 'utf8');
 
-test('rows alternate sides down the line', () => {
-    const sides = [...html.matchAll(/timeline-row timeline-(left|right)/g)].map(match => match[1]);
-    assert.equal(sides.length, 13);
-    sides.forEach((side, index) => assert.equal(side, index % 2 === 0 ? 'left' : 'right'));
+const column = name => {
+    const start = html.indexOf(`tl-col tl-col-${name}`);
+    return html.slice(start, html.indexOf('tl-col tl-col-', start + 1) >= 0 && name === 'left'
+        ? html.indexOf('tl-col tl-col-', start + 1)
+        : html.indexOf('</div>\n      </div>', start));
+};
+
+test('the dated cards are split into two columns, alternating by date', () => {
+    const dated = projects.filter(project => project.id !== 'more');
+    const ids = side => [...column(side).matchAll(/data-project="([^"]+)"/g)].map(match => match[1]);
+    assert.deepEqual(ids('left'), dated.filter((_, index) => index % 2 === 0).map(project => project.id));
+    assert.deepEqual(ids('right'), dated.filter((_, index) => index % 2 === 1).map(project => project.id));
+});
+
+test('every card carries its place in the date order, so one column can stack on phones', () => {
+    const orders = [...html.matchAll(/class="timeline-row[^"]*"[^>]*style="order: (\d+)"/g)].map(match => Number(match[1]));
+    assert.deepEqual(orders.sort((a, b) => a - b), [...Array(13).keys()]);
+});
+
+test('the year sits inside the card, above the title', () => {
+    assert.equal((html.match(/tl-year-inline/g) || []).length, 13);
+    const card = html.slice(html.indexOf('tl-year-inline'));
+    assert(card.indexOf('<h2') > 0 && card.indexOf('<h2') < card.indexOf('</div>'), 'the year precedes the heading');
+});
+
+test('the closing card sits below both columns, outside them', () => {
+    assert(html.indexOf('timeline-closing') > html.indexOf('tl-col tl-col-right'));
+    assert(html.indexOf('timeline-closing') > html.lastIndexOf('timeline-card'));
 });
 
 test('each dated row has one dot and one visible year', () => {
-    const rows = html.split('timeline-row').slice(1, 14);
+    const rows = html.split('class="timeline-row').slice(1);
     assert.equal(rows.length, 13);
     for (const row of rows) {
         assert.equal((row.match(/timeline-dot/g) || []).length, 1);
-        assert.match(row, /timeline-year[^>]*>\s*\d{4}/);
+        assert.match(row, /tl-year-inline[^>]*>\s*\d{4}/);
     }
 });
 
