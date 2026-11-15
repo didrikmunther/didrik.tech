@@ -10,9 +10,9 @@ const projects = YAML.parse(fs.readFileSync(path.join(root, 'src/data/projects.y
 
 test('every project but the closing one is dated, newest first', () => {
     const dated = projects.filter(project => project.id !== 'more');
-    assert.equal(dated.length, 12);
+    assert.equal(dated.length, 13);
     const years = dated.map(project => Number(project.year));
-    assert.deepEqual(years, [2026, 2025, 2025, 2024, 2022, 2020, 2020, 2018, 2018, 2018, 2018, 2014]);
+    assert.deepEqual(years, [2026, 2025, 2025, 2024, 2023, 2022, 2020, 2020, 2018, 2018, 2018, 2018, 2014]);
 });
 
 test('the closing GitHub card has no year, image or tech', () => {
@@ -41,13 +41,13 @@ const html = fs.readFileSync(path.join(site, 'projects/index.html'), 'utf8');
 
 test('rows alternate sides down the line', () => {
     const sides = [...html.matchAll(/timeline-row timeline-(left|right)/g)].map(match => match[1]);
-    assert.equal(sides.length, 12);
+    assert.equal(sides.length, 13);
     sides.forEach((side, index) => assert.equal(side, index % 2 === 0 ? 'left' : 'right'));
 });
 
 test('each dated row has one dot and one visible year', () => {
-    const rows = html.split('timeline-row').slice(1, 13);
-    assert.equal(rows.length, 12);
+    const rows = html.split('timeline-row').slice(1, 14);
+    assert.equal(rows.length, 13);
     for (const row of rows) {
         assert.equal((row.match(/timeline-dot/g) || []).length, 1);
         assert.match(row, /timeline-year[^>]*>\s*\d{4}/);
@@ -67,7 +67,7 @@ test('the closing card renders without a dot, year, image or tech element', () =
 });
 
 test('no project renders an empty tech element', () => {
-    assert.equal((html.match(/timeline-tech/g) || []).length, 12);
+    assert.equal((html.match(/timeline-tech/g) || []).length, 13);
     assert(!/timeline-tech[^>]*>\s*</.test(html));
 });
 
