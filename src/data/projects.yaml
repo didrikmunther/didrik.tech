@@ -40,6 +40,17 @@ projects:
       - Language Server support generated automatically for domain-specific languages written in the Miking framework.
       - A DSL gets hover types, go to definition, workspace symbols and code lenses without anyone writing a language server by hand.
 
+  - title: 'SSSB Laundry Automation'
+    id: 'sssb'
+    year: '2023'
+    tech: 'TypeScript · Puppeteer · Google Calendar'
+    img: './static/sssb.webp'
+    url: 'https://github.com/didrikmunther/sssb-laundry-automation'
+    target: '_blank'
+    text:
+      - The laundry rooms in my student housing are booked through a slow portal. This scrapes the free slots and puts them in my Google Calendar, so booking a time is a matter of accepting an invite.
+      - It runs unattended on a Raspberry Pi and books the room through the portal on my behalf.
+
   - title: 'Programming language'
     id: 'rostlang'
     year: '2022'

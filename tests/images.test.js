@@ -26,7 +26,7 @@ test('the image header parser reads webp and jpeg dimensions', () => {
 
 test('every timeline image declares the size it actually is', () => {
     const images = [...html.matchAll(/<img[^>]*>/g)].map(match => match[0]);
-    assert.equal(images.length, 12);
+    assert.equal(images.length, 13);
     for (const image of images) {
         const src = image.match(/src="\.\/([^"]+)"/)[1];
         const width = Number(image.match(/width="(\d+)"/)[1]);
