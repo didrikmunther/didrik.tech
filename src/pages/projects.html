@@ -25,9 +25,9 @@
       {% for project in projects %}
         {% if not project.year %}
           <div class="timeline-closing relative w-4/5 mx-auto">
-            <h2 class="text-xl md:text-2xl font-bold uppercase tracking-wider text-white">{{project.title|safe}}</h2>
+            <h2 class="text-xl md:text-2xl font-bold uppercase tracking-wider text-white" dir="auto">{{project.title}}</h2>
             {% for paragraph in project.text %}
-            <p class="mt-3 text-lg tracking-wide text-gray-400">{{paragraph}}</p>
+            <p class="mt-3 text-lg tracking-wide text-gray-400" dir="auto">{{paragraph}}</p>
             {% endfor %}
             <a href="{{project.url}}"{% if project.target %} target="{{project.target}}"{% endif %}>
               <div class="mt-5 p-4 font-bold text-blue-700 bg-white inline-block">{{ translation.texts.project_show }}</div>

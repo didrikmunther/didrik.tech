@@ -12,9 +12,17 @@ const root = path.join(__dirname, '../..');
 const withImageSize = project => {
     if (!project.img) return project;
 
-    const { width, height } = imageSize(path.join(root, project.img.replace(/^\.\//, '')));
+    try {
+        const { width, height } = imageSize(path.join(root, project.img.replace(/^\.\//, '')));
 
-    return { ...project, imgWidth: width, imgHeight: height };
+        return { ...project, imgWidth: width, imgHeight: height };
+    } catch (error) {
+        // A typo in the path or a format the reader does not know should cost
+        // this card its width and height, not take every page down with it.
+        console.warn(`projects.yaml: cannot read ${project.img} (${error.message}); rendering it without dimensions`);
+
+        return project;
+    }
 };
 
 module.exports = async (site, cb) => {
@@ -29,3 +37,5 @@ module.exports = async (site, cb) => {
 
     cb(null, site);
 };
+
+module.exports.withImageSize = withImageSize;
