@@ -12,7 +12,7 @@ test('every project but the closing one is dated, newest first', () => {
     const dated = projects.filter(project => project.id !== 'more');
     assert.equal(dated.length, 18);
     const years = dated.map(project => Number(project.year));
-    assert.deepEqual(years, [2026, 2025, 2025, 2024, 2023, 2022, 2020, 2020, 2019, 2018, 2018, 2018, 2018, 2016, 2015, 2015, 2014, 2013]);
+    assert.deepEqual(years, [2026, 2025, 2025, 2024, 2023, 2022, 2020, 2020, 2020, 2018, 2018, 2018, 2018, 2016, 2015, 2015, 2014, 2013]);
 });
 
 test('the closing GitHub card has no year, image or tech', () => {

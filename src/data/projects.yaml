@@ -101,16 +101,19 @@ projects:
   - title: 'KTH Formula Student Driverless'
     id: 'kthfsdv'
     run:
-      src: '/kthfsdv/'
-      hint: 'Python in the browser, about 16 MB'
-    year: '2019'
-    tech: 'ROS · Python · matplotlib'
+      src: '/pure-pursuit/'
+      hint: 'Python in the browser, about 9 MB'
+    year: '2020'
+    tech: 'Python · NumPy · ROS'
     img: './static/kthfsdv.webp'
-    url: 'https://github.com/didrikmunther/kthfsdv'
+    url: 'https://github.com/didrikmunther/pure-pursuit'
     target: '_blank'
+    links:
+      - label: 'Team exercises'
+        url: 'https://github.com/didrikmunther/kthfsdv'
     text:
-      - Exercises for KTH Formula Student's driverless team. The first is a ROS publisher and subscriber passing a number sequence between two nodes at 20 Hz.
-      - The second plots a family of functions with matplotlib. The image is that exercise's own output.
+      - Work for KTH Formula Student's driverless team. The part worth seeing is a pure pursuit controller, the steering method that picks a point on the track a set distance ahead and turns the car toward it.
+      - The simulation drives a car around a recorded track. Change the lookahead distance and watch it cut corners or weave.
 
   - title: 'Rust browser engine'
     id: 'rustbrowser'
