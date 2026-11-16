@@ -9,7 +9,7 @@ new tab.
 
 | Project | Page | How it runs |
 | --- | --- | --- |
-| Rost (2022) | `/rost/` | The existing build of Rost's own playground, made with `generate-demo.sh` in the rost repository: the compiler in WebAssembly, compiling Rost to WebAssembly in the page |
+| Rost (2022) | `/rost/` | Rost's own playground from its `demo/` folder, with the reworked UI in `rost-playground/`: the compiler built to WebAssembly, compiling Rost to WebAssembly in the page |
 | Web Audio API Synth (2020) | `/audio/` | The existing build |
 | Flappy Bird AI (2020) | `/flappy/` | The existing build |
 | KTH FS Driverless (2019) | `/kthfsdv/` | Exercise 2's `app.py`, run by Pyodide with numpy and matplotlib (about 16 MB, from jsDelivr) |
@@ -25,8 +25,9 @@ stdin in a loop or ran a blocking game loop, which a browser tab cannot do, a
 small adapter in this folder takes over only that part.
 
 `build.sh` rebuilds everything from the projects' repositories at the commits
-used here. It was last run with Emscripten 7.0.0 and Rust 1.91. The three existing
-builds (Rost, the synth, Flappy Bird AI) and Third are not rebuilt by it.
+used here. It was last run with Emscripten 7.0.0, Rust 1.91, wasm-bindgen-cli 0.2.93 and
+Node 24. The existing builds of the synth, Flappy Bird AI and Third are not
+rebuilt by it.
 
 Two edits outside the projects' sources, both to existing builds in `meta/`:
 
@@ -36,3 +37,11 @@ Two edits outside the projects' sources, both to existing builds in `meta/`:
   `react-audiocontext` repository.
 - `meta/run/vendor/browser_wasi_shim` is `@bjorn3/browser_wasi_shim` 0.4.2
   (MIT or Apache-2.0).
+
+The Rost playground's UI lives in `rost-playground/`, laid over the `demo/`
+app from the rost repository at build time. Its examples stick to what Rost's
+WebAssembly backend compiles today. As of commit `fa92fe9`, that backend
+reports `if`, `while` and `return` as not supported, panics on `-`, `/` and
+generic functions, and keeps only the first string of a string `+`. When the
+compiler panics, the playground now says so instead of leaving the previous
+output on screen.
