@@ -88,8 +88,13 @@
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
+                        // A single photo gets no arrows, dots or looping.
+                        var many = document.querySelectorAll('.splide__slide').length > 1;
                         var splide = new Splide('.splide', {
-                            type: 'loop',
+                            type: many ? 'loop' : 'slide',
+                            arrows: many,
+                            pagination: many,
+                            drag: many,
                             perPage: 1,
                             perMove: 1,
                             gap: 10,
