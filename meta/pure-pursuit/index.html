@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pure pursuit car simulation — run it</title>
+  <link rel="stylesheet" href="/run/run.css">
+  <style>
+    .layout { display: flex; gap: 16px; flex: 1; min-height: 0; }
+    .stage { flex: 1; min-width: 0; min-height: 0; position: relative; background: var(--panel);
+      border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    canvas { display: block; width: 100%; height: 100%; }
+    .controls { width: 240px; flex: none; display: flex; flex-direction: column; gap: 16px; }
+    .control label { display: flex; justify-content: space-between; font-size: 13px; color: var(--dim); margin-bottom: 6px; }
+    .control output { color: var(--fg); font: 13px "SF Mono", Menlo, monospace; }
+    input[type=range] { width: 100%; accent-color: #f6e05e; }
+    .seg { display: flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+    .seg button { flex: 1; padding: 6px 0; border: 0; background: transparent; color: var(--dim); cursor: pointer; font: 13px "SF Mono", Menlo, monospace; }
+    .seg button[aria-pressed="true"] { background: var(--line); color: var(--fg); }
+    .readout { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font: 13px "SF Mono", Menlo, monospace; }
+    .readout dt { color: var(--dim); }
+    .readout dd { margin: 0; text-align: right; }
+    .state { padding: 8px 10px; border-radius: 4px; background: var(--line); font-size: 13px; }
+    .state.lap { background: #23392a; color: var(--ok); }
+    .state.lost { background: #2a1d20; color: var(--err); }
+    .legend { color: var(--dim); font-size: 12px; line-height: 1.7; }
+    .legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+    .overlay { position: absolute; inset: 0; display: grid; place-items: center; color: var(--dim); font-size: 14px; }
+    .overlay[hidden] { display: none; }
+    @media (max-width: 760px) { .layout { flex-direction: column; } .controls { width: auto; } .stage { min-height: 320px; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <p class="intro"><strong>Pure pursuit, August 2020: a simulated car steering itself around a track.</strong>
+      This is the original <code>app.py</code>, running in Python in your browser. The car keeps choosing a point where a circle around it meets the track, then steers along the arc that reaches it. Change the circle's radius to see how the line changes: small values hug the track, large ones cut corners, and too small loses it. <span id="status" class="status">Loading Python (about 9 MB)…</span></p>
+    <div class="layout">
+      <div class="stage"><canvas id="canvas" aria-label="Car following a track"></canvas><div class="overlay" id="overlay">Loading…</div></div>
+      <div class="controls">
+        <div class="control">
+          <label for="lookahead">Lookahead distance <output id="lookahead-out">4.0</output></label>
+          <input type="range" id="lookahead" min="1" max="12" step="0.5" value="4">
+        </div>
+        <div class="control">
+          <label>Speed</label>
+          <div class="seg" role="group" aria-label="Speed">
+            <button data-speed="1">1×</button><button data-speed="3" aria-pressed="true">3×</button><button data-speed="8">8×</button>
+          </div>
+        </div>
+        <button class="go" id="restart">Restart</button>
+        <dl class="readout">
+          <dt>Step</dt><dd id="step">0</dd>
+          <dt>Steering</dt><dd id="steer">0°</dd>
+        </dl>
+        <div class="state" id="state" aria-live="polite">Starting…</div>
+        <div class="legend">
+          <div><i style="background:#4a5361;height:6px"></i>Track</div>
+          <div><i style="background:#f6e05e"></i>The car's path</div>
+          <div><i style="background:transparent;border-top:2px dashed #d7dde5;height:0"></i>Lookahead circle</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const $ = id => document.getElementById(id);
+    const canvas = $('canvas');
+    const ctx = canvas.getContext('2d');
+    let track = [];
+    let frames = [];
+    let shown = 0;
+    let finished = '';
+    let speed = 3;
+    let runId = 0;
+    let lookahead = 4;
+    let worker;
+    let view = null;
+
+    function startWorker() {
+      worker = new Worker('sim-worker.js');
+      worker.onmessage = ({ data }) => {
+        if (data.type === 'ready') {
+          track = data.track;
+          $('status').textContent = '';
+          $('overlay').hidden = true;
+          fit();
+          run();
+        } else if (data.type === 'frames' && data.id === runId) {
+          frames.push(...data.frames);
+          if (data.done) finished = data.done;
+        } else if (data.type === 'error') {
+          $('status').textContent = 'Could not run the simulation: ' + data.message;
+        }
+      };
+    }
+
+    let running = false;
+    function run() {
+      // A run already in progress can't be interrupted inside Python, so start a fresh worker.
+      if (running && !finished) { worker.terminate(); running = false; startWorker(); return; }
+      runId += 1; frames = []; shown = 0; finished = ''; running = true;
+      $('step').textContent = '0'; $('steer').textContent = '0°';
+      $('state').className = 'state'; $('state').textContent = 'Computing the run…';
+      worker.postMessage({ type: 'run', id: runId, lookahead });
+    }
+
+    function fit() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr; canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!track.length) return;
+      const xs = track.map(p => p[0]), ys = track.map(p => p[1]);
+      const minX = Math.min(...xs) - 6, maxX = Math.max(...xs) + 6, minY = Math.min(...ys) - 6, maxY = Math.max(...ys) + 6;
+      const scale = Math.min(rect.width / (maxX - minX), rect.height / (maxY - minY));
+      view = { scale, ox: (rect.width - (maxX - minX) * scale) / 2 - minX * scale, oy: (rect.height + (maxY - minY) * scale) / 2 + minY * scale };
+    }
+    const X = x => view.ox + x * view.scale;
+    const Y = y => view.oy - y * view.scale;
+
+    function draw() {
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      if (!view) return;
+      ctx.lineCap = ctx.lineJoin = 'round';
+
+      ctx.beginPath(); track.forEach(([x, y], i) => i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)));
+      ctx.strokeStyle = '#3a424e'; ctx.lineWidth = Math.max(6, view.scale * 1.6); ctx.stroke();
+      ctx.strokeStyle = '#5b6573'; ctx.lineWidth = 1; ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
+
+      if (!shown) return;
+      ctx.beginPath();
+      for (let i = 0; i < shown; i++) { const [x, y] = frames[i]; i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); }
+      ctx.strokeStyle = '#f6e05e'; ctx.lineWidth = 2.5; ctx.stroke();
+
+      const [x, y, yaw, tx, ty, steer] = frames[shown - 1];
+      ctx.beginPath(); ctx.arc(X(x), Y(y), lookahead * view.scale, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(215,221,229,.7)'; ctx.lineWidth = 1.2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(X(x), Y(y)); ctx.lineTo(X(tx), Y(ty)); ctx.strokeStyle = 'rgba(246,224,94,.5)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.beginPath(); ctx.arc(X(tx), Y(ty), 4, 0, Math.PI * 2); ctx.fillStyle = '#f6e05e'; ctx.fill();
+
+      // The car: a body pointing along yaw, front wheels turned by the steering angle.
+      const size = Math.max(9, view.scale * 1.2);
+      ctx.save(); ctx.translate(X(x), Y(y)); ctx.rotate(-yaw);
+      ctx.fillStyle = '#e53e3e'; ctx.beginPath(); ctx.moveTo(size, 0); ctx.lineTo(-size * .7, size * .55); ctx.lineTo(-size * .7, -size * .55); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.restore();
+
+      $('step').textContent = shown;
+      // The bicycle model uses tan(steering), so ±180° steers like 0°; show the effective angle.
+      $('steer').textContent = (Math.atan(Math.tan(steer)) * 180 / Math.PI).toFixed(1) + '°';
+    }
+
+    function tick() {
+      if (shown < frames.length) shown = Math.min(frames.length, shown + speed);
+      const state = $('state');
+      if (finished && shown >= frames.length) {
+        running = false;
+        state.className = 'state ' + (finished === 'lap' ? 'lap' : finished === 'lost' ? 'lost' : '');
+        state.textContent = finished === 'lap' ? `Lap complete in ${frames.length} steps.` : finished === 'lost' ? 'Lost the track: the circle no longer reaches it.' : 'Stopped after 2,500 steps.';
+      } else if (frames.length) {
+        state.className = 'state'; state.textContent = 'Driving…';
+      }
+      draw();
+      requestAnimationFrame(tick);
+    }
+
+    $('lookahead').addEventListener('input', event => {
+      lookahead = Number(event.target.value);
+      $('lookahead-out').textContent = lookahead.toFixed(1);
+    });
+    $('lookahead').addEventListener('change', run);
+    $('restart').addEventListener('click', run);
+    document.querySelectorAll('[data-speed]').forEach(button => button.addEventListener('click', () => {
+      speed = Number(button.dataset.speed);
+      document.querySelectorAll('[data-speed]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    }));
+    window.addEventListener('resize', fit);
+
+    startWorker();
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

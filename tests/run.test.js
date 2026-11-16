@@ -55,3 +55,11 @@ test('the page has one modal, and its frame loads nothing until opened', () => {
 test('the modal script ships only on the projects page', () => {
     assert(!fs.readFileSync(path.join(site, 'index.html'), 'utf8').includes('run.js'));
 });
+
+test('the Driverless card runs the pure pursuit simulation, not the old plot exercise', () => {
+    assert.equal(projects.find(project => project.id === 'kthfsdv').run.src, '/pure-pursuit/');
+    for (const file of ['index.html', 'sim-worker.js', 'app.py', 'path.json']) {
+        assert(fs.existsSync(path.join(site, 'pure-pursuit', file)), `pure-pursuit/${file} is missing`);
+    }
+    assert(!fs.existsSync(path.join(site, 'kthfsdv')), 'the plot exercise page is gone');
+});
