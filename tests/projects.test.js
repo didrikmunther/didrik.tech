@@ -10,9 +10,9 @@ const projects = YAML.parse(fs.readFileSync(path.join(root, 'src/data/projects.y
 
 test('every project but the closing one is dated, newest first', () => {
     const dated = projects.filter(project => project.id !== 'more');
-    assert.equal(dated.length, 13);
+    assert.equal(dated.length, 15);
     const years = dated.map(project => Number(project.year));
-    assert.deepEqual(years, [2026, 2025, 2025, 2024, 2023, 2022, 2020, 2020, 2018, 2018, 2018, 2018, 2014]);
+    assert.deepEqual(years, [2026, 2025, 2025, 2024, 2023, 2022, 2020, 2020, 2018, 2018, 2018, 2018, 2016, 2015, 2014]);
 });
 
 test('the closing GitHub card has no year, image or tech', () => {
@@ -55,11 +55,11 @@ test('the dated cards are split into two columns, alternating by date', () => {
 
 test('every card carries its place in the date order, so one column can stack on phones', () => {
     const orders = [...html.matchAll(/class="timeline-row[^"]*"[^>]*style="order: (\d+)"/g)].map(match => Number(match[1]));
-    assert.deepEqual(orders.sort((a, b) => a - b), [...Array(13).keys()]);
+    assert.deepEqual(orders.sort((a, b) => a - b), [...Array(15).keys()]);
 });
 
 test('the year sits inside the card, above the title', () => {
-    assert.equal((html.match(/tl-year-inline/g) || []).length, 13);
+    assert.equal((html.match(/tl-year-inline/g) || []).length, 15);
     const card = html.slice(html.indexOf('tl-year-inline'));
     assert(card.indexOf('<h2') > 0 && card.indexOf('<h2') < card.indexOf('</div>'), 'the year precedes the heading');
 });
@@ -71,7 +71,7 @@ test('the closing card sits below both columns, outside them', () => {
 
 test('each dated row has one dot and one visible year', () => {
     const rows = html.split('class="timeline-row').slice(1);
-    assert.equal(rows.length, 13);
+    assert.equal(rows.length, 15);
     for (const row of rows) {
         assert.equal((row.match(/timeline-dot/g) || []).length, 1);
         assert.match(row, /tl-year-inline[^>]*>\s*\d{4}/);
@@ -91,7 +91,7 @@ test('the closing card renders without a dot, year, image or tech element', () =
 });
 
 test('no project renders an empty tech element', () => {
-    assert.equal((html.match(/timeline-tech/g) || []).length, 13);
+    assert.equal((html.match(/timeline-tech/g) || []).length, 15);
     assert(!/timeline-tech[^>]*>\s*</.test(html));
 });
 
