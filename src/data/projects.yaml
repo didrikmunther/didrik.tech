@@ -103,7 +103,7 @@ projects:
     run:
       src: '/pure-pursuit/'
       hint: 'Python in the browser, about 9 MB'
-    year: '2019'
+    year: '2020'
     tech: 'Python · NumPy · ROS'
     img: './static/kthfsdv.webp'
     url: 'https://github.com/didrikmunther/pure-pursuit'

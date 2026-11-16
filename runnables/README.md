@@ -12,7 +12,7 @@ new tab.
 | Rost (2022) | `/rost/` | Rost's own playground from its `demo/` folder, with the reworked UI in `rost-playground/`: the compiler built to WebAssembly, compiling Rost to WebAssembly in the page |
 | Web Audio API Synth (2020) | `/audio/` | The existing build |
 | Flappy Bird AI (2020) | `/flappy/` | The existing build |
-| KTH FS Driverless (2019) | `/pure-pursuit/` | The pure pursuit `app.py`, run by Pyodide with NumPy (about 9 MB, from jsDelivr) in a web worker. A stand-in for matplotlib records each frame and the page draws it on a canvas; the only change to `app.py` is that the lookahead comes from the slider |
+| KTH FS Driverless (2020) | `/pure-pursuit/` | The pure pursuit `app.py`, run by Pyodide with NumPy (about 9 MB, from jsDelivr) in a web worker. A stand-in for matplotlib records each frame and the page draws it on a canvas; the only change to `app.py` is that the lookahead comes from the slider |
 | Rust browser engine (2018) | `/rust-browser/` | The unchanged crate built for `wasm32-wasip1`, run with the vendored `browser_wasi_shim` |
 | St Bernand Script (2016) | `/stbernand/` | The interpreter built with Emscripten; `stbernand/stbernand_web.cpp` replaces the stdin loop |
 | DevilScript (2015) | `/devilscript/` | The interpreter built with Emscripten; `devilscript/devilscript_web.cpp` replaces the stdin loop |
