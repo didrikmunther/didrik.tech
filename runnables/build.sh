@@ -66,11 +66,11 @@ clone rost fa92fe9
   npx vite build --base=/rost/ --outDir "$work/rost-dist" --emptyOutDir
   rm -rf "$meta/rost" && mkdir -p "$meta/rost" && cp -r "$work/rost-dist/"* "$meta/rost/" && rm -f "$meta/rost/vite.svg" )
 
-# Markov chain (2015) and the Driverless exercise (2019) are Python, run by
-# Pyodide in the page; their source files are copied as they are.
+# Markov chain (2015) and the Driverless pure pursuit simulation (2020) are
+# Python, run by Pyodide in the page; their source files are copied as they are.
 clone Markov f8ec8dc
 cp "$work/Markov/Markov.py" "$meta/markov/Markov.py"
-clone kthfsdv b72a41d
-cp "$work/kthfsdv/exercise2/app.py" "$meta/kthfsdv/app.py"
+clone pure-pursuit 00d4f36
+cp "$work/pure-pursuit/app.py" "$work/pure-pursuit/path.json" "$meta/pure-pursuit/"
 
 echo "Rebuilt into meta/. The Markov training text, meta/markov/blog-sentences.txt, is not regenerated."
