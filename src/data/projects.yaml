@@ -34,11 +34,16 @@ projects:
     year: '2024'
     tech: 'Miking · MCore · LSP'
     img: './static/mikinglsp.webp'
-    url: 'https://marketplace.visualstudio.com/items?itemName=didrikmunther.mcore'
+    url: 'https://github.com/didrikmunther/miking-lsp-demo'
     target: '_blank'
+    links:
+      - label: 'Read the thesis'
+        url: 'https://kth.diva-portal.org/smash/record.jsf?pid=diva2:1957912'
+      - label: 'VS Code extension'
+        url: 'https://marketplace.visualstudio.com/items?itemName=didrikmunther.mcore'
     text:
       - Language Server support generated automatically for domain-specific languages written in the Miking framework.
-      - A DSL gets hover types, go to definition, workspace symbols and code lenses without anyone writing a language server by hand.
+      - A DSL gets hover types, go to definition, workspace symbols and code lenses without anyone writing a language server by hand. This was my master's thesis at KTH.
 
   - title: 'SSSB Laundry Automation'
     id: 'sssb'
@@ -51,7 +56,7 @@ projects:
       - The laundry rooms in my student housing are booked through a slow portal. This scrapes the free slots and puts them in my Google Calendar, so booking a time is a matter of accepting an invite.
       - It runs unattended on a Raspberry Pi and books the room through the portal on my behalf.
 
-  - title: 'Programming language'
+  - title: 'Rost'
     id: 'rostlang'
     run:
       src: '/rost/'
