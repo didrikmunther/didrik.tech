@@ -1,0 +1,161 @@
+Two weeks of building and countless insights as Simon Wanna and I joined the SSE Business Lab × Microsoft × KTH AI Society Hackathon.
+We built CalliQ: an AI tool that stops fraud attempts in real time.
+With more than 250 applications and 14 finalists, we were happy to finish as runner-up and earn a spot in SSE Business Lab's Activate program to keep on building.
+Activate was designed to help early-stage teams validate and build their business ideas.
+CalliQ listens to phone calls in real time.
+When a caller seems to be attempting a scam, CalliQ warns the person receiving the call while they're still on the line.
+We built three views: the caller in a browser, the receiver on a phone, and a dashboard that shows the transcript as it comes in.
+On stage at Microsoft in Stockholm, we demoed it with a live call between two devices.
+The caller's browser records the microphone, downsamples the audio to 16 kHz, and streams it over a WebSocket to our Python backend.
+The backend connects the caller to an available receiver and transcribes the audio with Azure AI Speech, building up a transcript as the conversation goes on.
+After each new sentence, an agent built with LangGraph and GPT-4o mini reads the conversation so far and decides whether the receiver is about to be scammed.
+If so, the agent calls a warning tool with a short explanation, and the backend sends that warning straight to the receiver's phone.
+We asked the model to keep its warnings friendly and easy to understand.
+Instead of a generic alarm, the warning explains what looks risky:
+It's not safe to share your bank account details with anyone over the phone, especially if they are asking for it unexpectedly.
+This could be a scam.
+The receiver's phone in our prototype: an incoming call, then the warning 16 seconds in.
+Open a screenshot for a closer look.
+Big thanks to everyone from SSE Business Lab, Microsoft, and KTH AI Society who made this happen.
+If you're organizing a hackathon, Hugo Mårdh is the one who knows how to make it a success.
+You can read more about the event and the other finalists in SSE Business Lab's recap.
+Looking forward to the next one.
+For the February European Builders' League hackathon in Stockholm, I had the opportunity to work on a project of my choice for 48 hours.
+During the 48 hours, David Stålmarck, Leonid Meledin, Ivan Wely and I built a proof of concept preprocessor for React, exposing the tag:
+With static analysis, we can infer the type of product and onAdd to provide more intelligent code generation.
+A VSCode extension provides the "Generate" and "Patch" code lenses for each Generate element, allowing for quick prototyping.
+Your browser does not support the video tag.
+Using generated React components to create a shopping page.
+A Visual Studio Code extension provides code lenses for quick prototyping.
+For a future extension of this proof of concept, I'd like to see it be possible to add arbitrary SQL statements to be executed, e.g.:
+Thanks to Entrepreneur First, EQT Ventures, Velocity Fellows, Lovable, ElevenLabs, Leya, KTH AI Society, and Wave Ventures for hosting the first stop of the European Builders League.
+In February, I took part in HackEurope, where we built Optimera: a prototype that uses application traces to find slow database calls and asks a coding agent to propose a fix.
+The idea came from a familiar problem.
+You know an application is slow, but finding the query responsible still means moving between telemetry, logs, and source code.
+We wanted to connect those steps so that a performance problem could arrive with a proposed code change to review.
+The summary chart and improvement percentage are demo data, not measured performance results.
+Screenshots from Axel Dovskog's project page.
+From a trace to a proposed fix
+Our demo application used Express, Prisma, and PostgreSQL.
+OpenTelemetry recorded its execution, and Jaeger collected the traces.
+A Django backend scanned them for slow operations, while a React dashboard showed the incidents and suggested changes.
+Find a slow trace and identify the slowest instrumented Prisma call within it.
+Read the source location attached to that call.
+Give Claude Code the repository and a focused task: improve performance around that location while preserving the output.
+Commit the proposed change on a separate branch and open a pull request for review.
+The dashboard let us inspect the proposal and choose whether to merge or reject it.
+The agent's output was a candidate fix that still needed review.
+Keeping the source location through async calls
+I worked on the tracing and instrumentation that connected database operations back to the application code.
+A duration tells you where time went, but the agent also needs to know where to start editing.
+One awkward detail was Prisma's lazy execution.
+Calling a Prisma method creates a promise-like object; the query starts when that object is awaited.
+Capturing context around the initial method call wasn't enough, because that context could be gone by the time the query actually ran.
+The prototype wrapped Prisma calls to capture the application stack and the active OpenTelemetry context.
+It then restored that context when Prisma's promise executed.
+This let us attach the originating source frame to the query's span, alongside the model, operation, and arguments.
+That connection was the useful part: a slow operation could point to a specific place in the repository, instead of leaving the coding agent to search the entire application.
+A concrete example: the leaderboard
+The demo included a leaderboard endpoint that first loaded all models, then fetched matches separately for each model.
+That's an N+1-query pattern: one initial query followed by another for every item.
+The generated change below fetched the relevant match fields once and calculated each model's wins and totals in memory.
+It removed the repeated per-model queries.
+Loading those matches into memory has its own scaling limit, so this was a concrete optimization to inspect and benchmark, rather than a universal solution.
+The proposed leaderboard change: fewer database round trips, with the implementation available for review.
+Giving the agent a useful starting point
+Optimera brought together two pieces: telemetry showing where an application spent time, and a coding agent that could act on that evidence.
+Getting useful source locations through the instrumentation was what connected them.
+For this prototype, we focused on Prisma queries and N+1 patterns.
+Extending it would mean supporting more libraries and checking proposed changes against both expected behaviour and representative workloads.
+A pull request makes the suggestion inspectable; tests and measurements are what would give us confidence to ship it.
+The source code is on GitHub, and our original hackathon submission includes the demo.
+Rost is a statically typed programming language I've built in Rust.
+It has generics, type checking, error messages that point to the exact code, and a language server for VS Code.
+The compiler outputs Python or WebAssembly, and you can try it in your browser.
+The name is Swedish for rust.
+I've made a lot of programming languages from scratch, and Rost is the latest one.
+My oldest GitHub repositories are small C++ games from 9th grade, like Snake and Pong.
+In 2015, I started building Third, a 2D platformer engine in C++ and SDL with a built-in map editor.
+Third, the 2D platformer engine where I first embedded Lua.
+Play Third in your browser.
+In October 2015, after a few experiments with Lua bindings, I added Lua scripting to Third, so things like movement, projectiles, chat, and spells could be written as Lua scripts.
+That's when I got interested in making languages myself.
+Six days later, I started DevilScript, my first language on GitHub:
+- StBernandScript (2016, C++): variables, strings, constants, and arithmetic with parentheses.
+- Rustinterpreter (2018, Rust): an expression-based language compiled to bytecode for a small virtual machine.
+- rust-lang-2 (2020, Rust): functions as values and lists, compiled to instructions for a virtual machine.
+I started Rost in August 2022.
+The first version compiled straight to x86-64 assembly for NASM.
+Within ten days it had arithmetic, type inference, if statements, while loops, and colored error messages, and over the next year it got functions, pointers, structs, and arrays.
+In September 2024, I rewrote the compiler around an intermediate representation, added generics, and added two new backends: one that generates Python and one that generates WebAssembly.
+Here's a generic function, compiled with the Python backend:
+builtin declares a function that the backend provides.
+In the Python backend, printf uses Python's string formatting.
+The rewrite doesn't support everything the first version did yet: loops, if statements, and structs are still on the roadmap.
+Error messages and editor support
+Rost points to every piece of code involved in an error.
+Calling a function with the wrong type gives:
+I also wrote a language server for Rost.
+With its VS Code extension, the same errors show up as you type, and you can hover over code to see types and jump to definitions.
+The same type errors from the Rost language server in VS Code.
+From Rost to my master's thesis
+Making my own languages is what led me to my master's thesis at KTH.
+Editor support like this makes a language much easier to use, but it takes a lot of work to build.
+With tools like Langium or Xtext, a language that already has a compiler typically has to implement its semantics a second time to get it.
+In Semi-Automatic LSP Server Generation for Domain-Specific Languages, I proposed reusing what the compiler already knows instead: metadata attached during compilation provides language server features such as go-to definition and hover information.
+I demonstrated the approach in the Miking language workbench and evaluated it on two domain-specific languages, MLang and ProbTime.
+The results show that language support can be derived semi-automatically with minimal manual work.
+The Rost demo compiles your code to WebAssembly and runs it in the browser.
+The source code is on GitHub.
+At Strawberry, we're building AI companions that are delightful and easy to use for non-technical people.
+I work on agent behaviour, particularly the memory system and the evaluations we use to test browser use and agent behaviour.
+Open the image for a closer look.
+Memory is a big part of making a companion feel easy to work with.
+Our companions remember your preferences, your workflows, people you work with, and things you do.
+This lets you be a little more vague when asking for something, without having to explain your entire workflow again.
+How a companion remembers The cover provides context at the start of a conversation; recall brings back details when needed.
+Forgotten observations are marked, and that state carries into dreaming.
+Our memory system starts with a database of observations.
+We create these by forking the user's chat before its cache goes stale or the conversation needs to be compacted.
+This gives us a separate continuation of the conversation in which to capture observations.
+At night, an agent "dreams" over the day's chats and observations, producing a summary we call a cover.
+We inject this into the system prompt, giving the companion background knowledge it brings into new conversations.
+This is part of what gives a companion its continuity and "soul."
+The observations and original chat transcripts also remain searchable, both by wording and by meaning.
+The companion can recall details beyond what's included in its cover.
+Research on LongMemEval found that compressing conversations into individual facts hurt overall performance through information loss, although it helped multi-session reasoning.
+One thing we learned is that giving an agent freedom to organize its own memory files can backfire.
+In our experiments, the files and memories became bloated, and performance degraded.
+The models tended to add more text rather than remove it, which made forgetting an essential part of the design.
+In our system, forgetting means marking an observation as forgotten.
+That state also carries through into subsequent dreams.
+It's tempting to let agents manage all of this themselves.
+Perhaps they'll become better at it, but today we've found that they need more guidance and constraints to keep their memories useful.
+Another interesting challenge is capability awareness: the agent needs to know about its own settings and features, including how they work together.
+As we build more functionality, that prompting can become stale or get lost among other instructions.
+This is where evaluations, or evals, come in.
+We build tests around features and combinations of features to check that the agent understands and uses them correctly.
+That includes everything from spreadsheet tasks and navigating broken websites to using memory across multiple webpages.
+The evals have also become useful beyond the agent team.
+Our go-to-market team builds custom companions for different use cases.
+Previously, they would build a companion and manually test it, which takes a lot of time.
+Now they can build several in parallel and benchmark them against expected outcomes using deterministic test data.
+Here's an example of an eval for Sofia, a support companion.
+I set up the context she starts with, the world she can interact with, and the task she needs to solve.
+These excerpts show a few of the pieces; the full configuration is below.
+Support inbox evalTypeScript Context World Task Give Sofia a familiar starting point: working files, memories, and previous conversations.
+Let Sofia use Slack through the browser or a connector, backed by the same state.
+Keep search and navigation deterministic.
+Ask Sofia to draft support replies and update the team.
+A separate model plays Amira, sharing her preferences only when asked.
+View full configuration Copy code
+The Slack website and connector share the same state, so the companion can work across both interfaces.
+A separate model plays the user and is instructed to supply preferences only when asked.
+That lets the eval include follow-up questions while leaving the companion responsible for finding the facts it needs.
+For me, a big benefit is the reduction in cognitive overhead.
+We can test many things in parallel and catch regressions before deploying changes.
+That makes it much easier to move quickly and feel confident about what we ship.
+What makes this work exciting is seeing people actually use these companions and become more effective.
+There's so much left to build and figure out.
+It feels like a new area of software is opening up, and I'm excited to help shape it.
+With Strawberry 1.0 now launched, Retail Technology Innovation Hub has written about what we're building.

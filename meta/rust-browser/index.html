@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rust browser engine — run it</title>
+  <link rel="stylesheet" href="/run/run.css">
+</head>
+<body>
+  <div class="page">
+    <p class="intro"><strong>The 2018 Rust browser engine, compiled to WebAssembly.</strong> Edit the HTML and CSS and press Parse: the engine reads them as <code>example/index.html</code> and <code>example/index.css</code>, exactly as it does on disk, and prints the DOM and selectors it built.</p>
+    <div class="panes">
+      <div class="pane"><h2>example/index.html</h2><textarea id="html" spellcheck="false" aria-label="HTML input"></textarea></div>
+      <div class="pane"><h2>example/index.css</h2><textarea id="css" spellcheck="false" aria-label="CSS input"></textarea></div>
+      <div class="pane"><h2 id="out-title">Parsed DOM tree</h2><pre class="out" id="out" aria-live="polite"></pre></div>
+    </div>
+    <div style="display:flex;gap:14px;align-items:center">
+      <button class="go" id="go">Parse</button>
+      <label class="status"><input type="checkbox" id="raw"> Show the engine's raw output</label>
+    </div>
+  </div>
+
+  <script type="module">
+    import WASI from '/run/vendor/browser_wasi_shim/wasi.js';
+    import { File, Directory, PreopenDirectory, OpenFile, ConsoleStdout } from '/run/vendor/browser_wasi_shim/fs_mem.js';
+
+    const $ = id => document.getElementById(id);
+    $('html').value = `<html lang="en">
+  <head>
+    <title>Hello</title>
+  </head>
+  <body>
+    <p class="greeting" id="first">Hello there</p>
+    <div class="thing"><p>Nested</p></div>
+  </body>
+</html>`;
+    $('css').value = `* {
+  display: block;
+}
+
+head {
+  display: none;
+}
+
+div.thing > p {
+  color: #afa;
+}`;
+
+    const module = WebAssembly.compileStreaming(fetch('browser.wasm'));
+    let lastRaw = '';
+
+    const escape = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+    // A small reader for the engine's Debug output: Node { children: [...], node_type: ... }.
+    function parseDebug(src) {
+      let i = 0;
+      const ws = () => { while (/\s/.test(src[i])) i++; };
+      const expect = t => { ws(); if (!src.startsWith(t, i)) throw new Error(`expected ${t} at ${i}`); i += t.length; };
+      const string = () => {
+        ws(); expect('"'); let out = '';
+        while (src[i] !== '"') {
+          if (src[i] === '\\') { const n = src[i + 1]; out += n === 'n' ? '\n' : n === 't' ? '\t' : n; i += 2; }
+          else out += src[i++];
+        }
+        i++; return out;
+      };
+      const ident = () => { ws(); const m = /^[A-Za-z_]+/.exec(src.slice(i)); i += m[0].length; return m[0]; };
+      function node() {
+        expect('Node'); expect('{'); expect('children:'); expect('[');
+        const children = [];
+        ws(); while (src[i] !== ']') { children.push(node()); ws(); if (src[i] === ',') i++; ws(); }
+        i++; expect(','); expect('node_type:');
+        const kind = ident(); expect('(');
+        let n;
+        if (kind === 'Text') n = { text: string() };
+        else {
+          expect('ElementData'); expect('{'); expect('tag_name:'); const tag = string(); expect(','); expect('attributes:'); expect('{');
+          const attrs = []; ws();
+          while (src[i] !== '}') {
+            const key = string(); expect(':'); ws();
+            let value = null;
+            if (src.startsWith('Some(', i)) { i += 5; value = string(); expect(')'); } else { expect('None'); }
+            attrs.push([key, value]); ws(); if (src[i] === ',') i++; ws();
+          }
+          i++; expect('}'); n = { tag, attrs };
+        }
+        expect(')'); expect('}');
+        n.children = children; return n;
+      }
+      return node();
+    }
+
+    function render(n, prefix = '', last = true, root = true) {
+      const branch = root ? '' : `<span class="d">${prefix}${last ? '└─ ' : '├─ '}</span>`;
+      const childPrefix = root ? '' : prefix + (last ? '   ' : '│  ');
+      let line;
+      if (n.text !== undefined) line = `${branch}<span class="a">Text</span> <span class="s">${escape(JSON.stringify(n.text.trim()))}</span>`;
+      else {
+        const attrs = n.attrs.map(([k, v]) => `<span class="a">${escape(k)}</span>: <span class="s">${v === null ? 'none' : escape(JSON.stringify(v))}</span>`).join(', ');
+        line = `${branch}<span class="t">Element</span> ${escape(n.tag)}${attrs ? ` <span class="d">{</span> ${attrs} <span class="d">}</span>` : ''}`;
+      }
+      const kids = n.children.filter(c => c.text === undefined || c.text.trim() !== '');
+      return [line, ...kids.map((c, k) => render(c, childPrefix, k === kids.length - 1, false))].join('\n');
+    }
+
+    function show() {
+      if ($('raw').checked) { $('out-title').textContent = 'Raw output'; $('out').innerHTML = escape(lastRaw); return; }
+      $('out-title').textContent = 'Parsed DOM tree';
+      const line = lastRaw.split('\n').find(l => l.startsWith('parsed: '));
+      if (!line) { $('out').innerHTML = `<span class="e">${escape(lastRaw || 'No output.')}</span>`; return; }
+      try { $('out').innerHTML = render(parseDebug(line.slice(8))) + '\n\n<span class="d">Whitespace-only text nodes hidden. Tick the box for everything the engine printed, including the CSS selectors.</span>'; }
+      catch { $('out').innerHTML = escape(lastRaw); }
+    }
+
+    async function run() {
+      const enc = new TextEncoder();
+      let out = '';
+      const sink = ConsoleStdout.lineBuffered(line => { out += line + '\n'; });
+      const fds = [
+        new OpenFile(new File([])),
+        sink,
+        sink,
+        new PreopenDirectory('.', new Map([['example', new Directory(new Map([
+          ['index.html', new File(enc.encode($('html').value))],
+          ['index.css', new File(enc.encode($('css').value))]
+        ]))]]))
+      ];
+      const wasi = new WASI(['browser'], [], fds);
+      try {
+        const instance = await WebAssembly.instantiate(await module, { wasi_snapshot_preview1: wasi.wasiImport });
+        wasi.start(instance);
+      } catch (e) {
+        out += `\n[the engine stopped: ${e.message || e}]\n`;
+      }
+      lastRaw = out.trim();
+      show();
+    }
+
+    $('go').addEventListener('click', run);
+    $('raw').addEventListener('change', show);
+    run();
+  </script>
+</body>
+</html>

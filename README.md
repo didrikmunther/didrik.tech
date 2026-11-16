@@ -36,3 +36,7 @@ map. When updating the compiled game, replace `index.js`, `index.wasm` and
 `index.data` together, preserving the site's `index.html` wrapper. Serve `.wasm`
 as `application/wasm`; assets resolve relative to `/third/`. The roughly 20 MB
 game download is confined to the game page, not the article or projects listing.
+
+Ten projects on the projects page can run in the browser, in a modal opened by
+their **Run it here** button. Their pages live in `meta/` next to Third's, and
+`runnables/README.md` explains how each one is built and how to rebuild them.
