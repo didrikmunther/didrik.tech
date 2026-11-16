@@ -61,10 +61,10 @@ test('article and image metadata refer to real assets and the canonical author',
         if (post === 'generact') {
             assert(cover.includes('Visual Studio Code'));
             assert(!cover.includes('Didrik Munther'));
-            for (const photo of ['all.jpg', 'stage.jpg']) {
-                assert(images.find(image => image.includes(photo)).includes('alt="Didrik Munther'));
-            }
-            assert.equal(data.image.length, 3);
+            assert(images.find(image => image.includes('all.jpg')).includes('alt="Didrik Munther'));
+            assert(!html.includes('stage.jpg'), 'the stage photo is removed');
+            assert(!data.image.some(image => image.includes('stage.jpg')));
+            assert.equal(data.image.length, 2);
         }
     }
     const listing = readPage('/blog/');

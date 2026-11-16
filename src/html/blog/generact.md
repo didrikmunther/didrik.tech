@@ -11,8 +11,6 @@ coverImgPosition: left
 album:
   - src: /static/blog/generact/all.jpg
     alt: Didrik Munther and other participants at the European Builders' League hackathon in Stockholm.
-  - src: /static/blog/generact/stage.jpg
-    alt: Didrik Munther with two teammates at the European Builders' League hackathon in Stockholm.
 date: 16 February 2025
 datePublished: '2025-02-16'
 dateModified: '2026-10-27'
