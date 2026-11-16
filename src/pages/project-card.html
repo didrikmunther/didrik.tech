@@ -1,15 +1,15 @@
 <div class="timeline-row" data-project="{{project.id}}" data-year="{{project.year}}" style="order: {{loop.index0}}">
   <div class="timeline-dot" aria-hidden="true"></div>
   <div class="timeline-card bg-red-800 text-white shadow rounded-sm">
-    <img src="{{project.img}}" alt="{{project.title|safe}}" width="{{project.imgWidth}}" height="{{project.imgHeight}}"{% if not loop.first %} loading="lazy"{% endif %}>
+    {% if project.img %}<img src="{{project.img}}" alt="{{project.title}}" width="{{project.imgWidth}}" height="{{project.imgHeight}}"{% if not loop.first %} loading="lazy"{% endif %}>{% endif %}
     <div class="timeline-body p-8 md:p-10">
       <span class="tl-year-inline">{{project.year}}</span>
-      <h2 class="leading-normal md:leading-normal text-2xl md:text-3xl font-bold uppercase tracking-wider break-words">{{project.title|safe}}</h2>
+      <h2 class="leading-normal md:leading-normal text-2xl md:text-3xl font-bold uppercase tracking-wider break-words" dir="auto">{{project.title}}</h2>
       <hr class="my-5">
       {% for paragraph in project.text %}
-      <p class="mb-4 text-lg tracking-wide">{{paragraph}}</p>
+      <p class="mb-4 text-lg tracking-wide" dir="auto">{{paragraph}}</p>
       {% endfor %}
-      <p class="timeline-tech">{{project.tech}}</p>
+      {% if project.tech %}<p class="timeline-tech">{{project.tech}}</p>{% endif %}
       <a href="{{project.url}}"{% if project.target %} target="{{project.target}}"{% endif %}{% if project.linkDescription %} aria-describedby="project-{{project.id}}-description"{% endif %}>
         <div class="mt-4 p-4 font-bold text-blue-700 bg-white inline-block">{{ translation.texts.project_show }}</div>
       </a>

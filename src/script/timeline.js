@@ -57,9 +57,21 @@
             });
         };
 
+        // Each pass reads offsetTop for every card, which forces layout, so
+        // resizing waits for a frame rather than running per resize event.
+        var pending = false;
+        var schedule = function () {
+            if (pending) return;
+            pending = true;
+            window.requestAnimationFrame(function () {
+                pending = false;
+                apply();
+            });
+        };
+
         apply();
-        window.addEventListener('load', apply);
-        window.addEventListener('resize', apply);
+        window.addEventListener('load', schedule);
+        window.addEventListener('resize', schedule);
     };
 
     if (typeof module !== 'undefined' && module.exports) {

@@ -487,10 +487,23 @@
 
 .timeline-row {
     position: relative;
+    min-width: 0;
 }
 
 .timeline-card {
+    min-width: 0;
     overflow: hidden;
+}
+
+/* A repo URL in a description has no space to break at, and a flex item will
+   not shrink below its longest word unless it is told it can. */
+.timeline-body {
+    min-width: 0;
+}
+
+.timeline-card h2,
+.timeline-card p {
+    overflow-wrap: anywhere;
 }
 
 .timeline-card img {
@@ -557,12 +570,12 @@
         flex-direction: column;
         gap: 0;
         padding-top: 2rem;
-        padding-left: 2.5rem;
+        padding-left: 1.5rem;
     }
 
     .timeline:before {
         top: 2rem;
-        left: 7px;
+        left: 3px;
         margin-left: 0;
     }
 
@@ -577,20 +590,20 @@
 
     .tl-col-left .timeline-dot,
     .tl-col-right .timeline-dot {
-        left: -34px;
+        left: -22px;
         right: auto;
     }
 
     .tl-col-left .timeline-row:after,
     .tl-col-right .timeline-row:after {
-        left: -24px;
+        left: -14px;
         right: auto;
-        width: 24px;
+        width: 14px;
     }
 
     .timeline-closing {
         padding-top: 2rem;
-        padding-left: 2.5rem;
+        padding-left: 1.5rem;
         text-align: left;
     }
 }

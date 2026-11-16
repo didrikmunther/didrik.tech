@@ -116,3 +116,35 @@ test('no project text points at its neighbour by position', () => {
         }
     }
 });
+
+test('titles are escaped, not injected as markup', () => {
+    // "Nya Hjul & Däckorder" is the live canary: with the safe filter gone the
+    // ampersand arrives as an entity, and a title carrying a quote or an angle
+    // bracket can no longer close the alt attribute or vanish into a tag.
+    assert(html.includes('Nya Hjul &amp; D'), 'the ampersand must be escaped');
+    assert(!html.includes('title|safe'));
+    const timeline = html.slice(html.indexOf('class="timeline relative'), html.indexOf('</main>'));
+    const alts = [...timeline.matchAll(/alt="([^"]*)"/g)].map(match => match[1]);
+    assert.equal(alts.length, 15);
+    for (const alt of alts) assert(!alt.includes('<'), alt);
+});
+
+test('text that can run long gets a direction and a break opportunity', () => {
+    assert((html.match(/dir="auto"/g) || []).length >= 15, 'headings carry dir="auto"');
+});
+
+test('a project without an image renders no image element at all', () => {
+    assert(!html.includes('<img src=""'));
+    assert(!html.includes('width=""'));
+});
+
+test('every dated project carries the fields the card needs', () => {
+    for (const project of projects.filter(project => project.id !== 'more')) {
+        for (const field of ['title', 'year', 'url', 'text', 'img']) {
+            assert(project[field] !== undefined, `${project.id} is missing ${field}`);
+        }
+        assert.match(String(project.year), /^\d{4}$/);
+        assert(project.title.length <= 60, `${project.id} has a title of ${project.title.length} characters`);
+        assert(project.text.length > 0, `${project.id} has no description`);
+    }
+});
