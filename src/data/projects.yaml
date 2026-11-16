@@ -129,6 +129,28 @@ projects:
       - An e-shop for everything that's got to do with wheels. The site allows for filtering of the products properties, and allows payment through Klarna.
       - The project consisted of building a website with the necessary modules in Angular 6 and a Klarna system in PHP
 
+  - title: 'St Bernand Script'
+    id: 'stbernand'
+    year: '2016'
+    tech: 'C++'
+    img: './static/stbernand.webp'
+    url: 'https://github.com/didrikmunther/StBernandScript'
+    target: '_blank'
+    text:
+      - A second language, three months after the first. This one has a real lexer, operator precedence, and a stack-based evaluator.
+      - When it cannot parse a line it points at the token it choked on and lists what it expected instead, which turned out to be the part worth keeping.
+
+  - title: 'DevilScript'
+    id: 'devilscript'
+    year: '2015'
+    tech: 'C++'
+    img: './static/devilscript.webp'
+    url: 'https://github.com/didrikmunther/DevilScript'
+    target: '_blank'
+    text:
+      - My first programming language. An interpreter in C++ with variables, arithmetic, and a print statement, driven from a REPL that announces itself in corrupted text.
+      - Everything I have built since, up to Rost, started here.
+
   - title: '2-D Platformer Engine'
     id: 'platformer'
     year: '2014'

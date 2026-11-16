@@ -456,66 +456,97 @@
     margin-right: 8px;
 } */
 
-/* Projects timeline: a red spine with cards alternating down it. */
+/* Projects timeline: a red spine with two columns that flow independently, so
+   a short card on one side does not leave a hole on the other. src/script/timeline.js
+   nudges cards down when two dots would otherwise crowd each other. */
 .timeline {
+    display: flex;
+    align-items: flex-start;
+    gap: 112px;
     padding-top: 3rem;
 }
 
 .timeline:before {
     content: '';
     position: absolute;
-    top: 5rem;
-    bottom: 11rem;
+    top: 3rem;
+    bottom: 0;
     left: 50%;
     width: 4px;
     margin-left: -2px;
     background: #9b2c2c;
 }
 
-.timeline-row {
-    position: relative;
+.tl-col {
     display: flex;
-    margin-bottom: 7rem;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 144px;
+    min-width: 0;
 }
 
-.timeline-left { justify-content: flex-start; }
-.timeline-right { justify-content: flex-end; }
+.timeline-row {
+    position: relative;
+    min-width: 0;
+}
+
+.timeline-card {
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* A repo URL in a description has no space to break at, and a flex item will
+   not shrink below its longest word unless it is told it can. */
+.timeline-body {
+    min-width: 0;
+}
+
+.timeline-card h2,
+.timeline-card p {
+    overflow-wrap: anywhere;
+}
+
+.timeline-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.tl-year-inline {
+    display: block;
+    margin-bottom: .5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    line-height: 1;
+    opacity: .75;
+}
 
 .timeline-dot {
     position: absolute;
-    top: 2.5rem;
-    left: 50%;
+    top: 22px;
     width: 22px;
     height: 22px;
-    margin-left: -11px;
     border: 5px solid #9b2c2c;
     border-radius: 9999px;
     background: #fdfdfd;
     z-index: 2;
 }
 
-.timeline-year {
+.tl-col-left .timeline-dot { right: -67px; }
+.tl-col-right .timeline-dot { left: -67px; }
+
+.timeline-row:after {
+    content: '';
     position: absolute;
-    top: 1.9rem;
-    color: #fdfdfd;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    line-height: 1;
+    top: 32px;
+    width: 46px;
+    height: 2px;
+    background: #9b2c2c;
 }
 
-.timeline-left .timeline-year { left: calc(50% + 2.5rem); }
-.timeline-right .timeline-year { right: calc(50% + 2.5rem); }
-
-.timeline-card {
-    width: calc(50% - 3.5rem);
-    overflow: hidden;
-}
-
-.timeline-card img {
-    display: block;
-    width: 100%;
-}
+.tl-col-left .timeline-row:after { right: -46px; }
+.tl-col-right .timeline-row:after { left: -46px; }
 
 .timeline-tech {
     margin-bottom: 0;
@@ -527,42 +558,52 @@
 }
 
 .timeline-closing {
-    position: relative;
-    padding-top: 1rem;
+    padding-top: 8rem;
     text-align: center;
 }
 
+/* One column: the spine moves to the left edge and the cards fall back into a
+   single date-ordered stack. The columns collapse with display: contents so the
+   order property can interleave them again. */
 @media (max-width: 1023px) {
+    .timeline {
+        flex-direction: column;
+        gap: 0;
+        padding-top: 2rem;
+        padding-left: 1.5rem;
+    }
+
     .timeline:before {
-        left: 7px;
-        bottom: 5rem;
+        top: 2rem;
+        left: 3px;
         margin-left: 0;
     }
 
+    .tl-col {
+        display: contents;
+    }
+
     .timeline-row {
+        margin-top: 0 !important;
         margin-bottom: 4rem;
-        padding-left: 2.5rem;
-        flex-direction: column;
     }
 
-    .timeline-dot {
-        top: .4rem;
-        left: 0;
-        margin-left: -4px;
+    .tl-col-left .timeline-dot,
+    .tl-col-right .timeline-dot {
+        left: -22px;
+        right: auto;
     }
 
-    .timeline-year,
-    .timeline-left .timeline-year,
-    .timeline-right .timeline-year {
-        position: static;
-        margin-bottom: 1rem;
-        font-size: 1.6rem;
+    .tl-col-left .timeline-row:after,
+    .tl-col-right .timeline-row:after {
+        left: -14px;
+        right: auto;
+        width: 14px;
     }
-
-    .timeline-card { width: 100%; }
 
     .timeline-closing {
-        padding-left: 2.5rem;
+        padding-top: 2rem;
+        padding-left: 1.5rem;
         text-align: left;
     }
 }
