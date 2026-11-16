@@ -56,7 +56,7 @@ projects:
       - The laundry rooms in my student housing are booked through a slow portal. This scrapes the free slots and puts them in my Google Calendar, so booking a time is a matter of accepting an invite.
       - It runs unattended on a Raspberry Pi and books the room through the portal on my behalf.
 
-  - title: 'Programming language'
+  - title: 'Rost'
     id: 'rostlang'
     year: '2022'
     tech: 'Rust'
