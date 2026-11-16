@@ -148,3 +148,11 @@ test('every dated project carries the fields the card needs', () => {
         assert(project.text.length > 0, `${project.id} has no description`);
     }
 });
+
+test('the Miking LSP card links to its repo and the thesis', () => {
+    const start = html.indexOf('data-project="mikinglsp"');
+    const card = html.slice(start, html.indexOf('class="timeline-row', start + 1));
+    assert(card.includes('href="https://github.com/didrikmunther/miking-lsp-demo"'), 'repo link');
+    assert(card.includes('href="https://kth.diva-portal.org/smash/record.jsf?pid=diva2:1957912"'), 'thesis link');
+    assert(card.includes('href="https://marketplace.visualstudio.com/items?itemName=didrikmunther.mcore"'), 'extension link kept');
+});

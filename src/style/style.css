@@ -557,6 +557,25 @@
     opacity: .85;
 }
 
+.timeline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.timeline-link {
+    display: inline-block;
+    padding: calc(1rem - 2px);
+    border: 2px solid rgba(255, 255, 255, .8);
+    color: #fff;
+    font-weight: 700;
+}
+
+.timeline-link:hover {
+    background: rgba(255, 255, 255, .12);
+}
+
 .timeline-closing {
     padding-top: 8rem;
     text-align: center;
