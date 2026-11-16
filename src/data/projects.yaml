@@ -89,6 +89,17 @@ projects:
       - An evolutionary neural network which learns to play Flappy Bird in the browser.
       - The project is build with TypeScript.
 
+  - title: 'KTH Formula Student Driverless'
+    id: 'kthfsdv'
+    year: '2019'
+    tech: 'ROS · Python · matplotlib'
+    img: './static/kthfsdv.webp'
+    url: 'https://github.com/didrikmunther/kthfsdv'
+    target: '_blank'
+    text:
+      - Exercises for KTH Formula Student's driverless team. The first is a ROS publisher and subscriber passing a number sequence between two nodes at 20 Hz.
+      - The second plots a family of functions with matplotlib. The image is that exercise's own output.
+
   - title: 'Rust browser engine'
     id: 'rustbrowser'
     year: '2018'
@@ -156,6 +167,17 @@ projects:
       - My first programming language. An interpreter in C++ with variables, arithmetic, and a print statement, driven from a REPL that announces itself in corrupted text.
       - Everything I have built since, up to Rost, started here.
 
+  - title: 'Markov chain'
+    id: 'markov'
+    year: '2015'
+    tech: 'Python · BeautifulSoup'
+    img: './static/markov.webp'
+    url: 'https://github.com/didrikmunther/Markov'
+    target: '_blank'
+    text:
+      - A Markov chain text generator. It scraped comment threads from Reddit's front page and fourteen subreddits, learned which word tends to follow which, and wrote new comments from the result.
+      - Reddit's 2015 pages are long gone, so the image shows the same chain trained on this site's blog posts instead.
+
   - title: '2-D Platformer Engine'
     id: 'platformer'
     year: '2014'
@@ -166,6 +188,17 @@ projects:
     text:
       - Third is a platformer engine built in C++ with a built-in map editor and Lua scripting.
       - Play Skygarden Keep in your browser. Explore floating gardens and climb to the summit beacon. Keyboard and mouse required.
+
+  - title: 'Snake'
+    id: 'snake'
+    year: '2013'
+    tech: 'C++ · SDL'
+    img: './static/snake.webp'
+    url: 'https://github.com/didrikmunther/snakecode'
+    target: '_blank'
+    text:
+      - The oldest project on my GitHub. A Snake clone in C++ and SDL, written over two days in December 2013, with a snake built from a chain of blocks that each follow the one ahead.
+      - The window title still admits that the program has memory leaks.
 
   - title: 'More projects on GitHub'
     id: 'more'
