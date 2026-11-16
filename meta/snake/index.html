@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Snake (2013) — run it</title>
+  <link rel="stylesheet" href="/run/run.css">
+  <style>
+    .stage { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+    canvas { width: min(100%, 640px); aspect-ratio: 4 / 3; height: auto; background: #000; image-rendering: pixelated;
+      border: 1px solid var(--line); border-radius: 4px; outline: none; }
+    canvas:focus-visible { outline: 2px solid var(--tag); outline-offset: 3px; }
+    .pad { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .pad button { min-width: 52px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px;
+      background: var(--panel); color: var(--fg); font-size: 16px; cursor: pointer; touch-action: manipulation; }
+    .pad button:active { background: var(--line); }
+    kbd { padding: 1px 6px; border: 1px solid var(--line); border-radius: 3px; font: 12px "SF Mono", Menlo, monospace; color: var(--fg); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <p class="intro"><strong>Snake, December 2013, compiled from the original C++/SDL source to WebAssembly.</strong>
+      Steer with <kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd>, grow with <kbd>S</kbd>, shrink with <kbd>D</kbd>.
+      It was a two-day project: there's no food and no walls yet, just a snake you can drive. <span id="status" class="status">Loading…</span></p>
+    <div class="stage"><canvas id="canvas" tabindex="0" aria-label="Snake game" oncontextmenu="event.preventDefault()"></canvas></div>
+    <div class="pad" aria-label="On-screen controls">
+      <button data-key="37" aria-label="Left">←</button>
+      <button data-key="38" aria-label="Up">↑</button>
+      <button data-key="40" aria-label="Down">↓</button>
+      <button data-key="39" aria-label="Right">→</button>
+      <button data-key="83">S grow</button>
+      <button data-key="68">D shrink</button>
+      <button id="restart">Restart</button>
+    </div>
+  </div>
+  <script>
+    var canvas = document.getElementById('canvas');
+    var Module = {
+      canvas: canvas,
+      onRuntimeInitialized: function () {
+        document.getElementById('status').textContent = '';
+        canvas.focus();
+      },
+      print: function () {},
+      printErr: function () {}
+    };
+    // The on-screen pad sends the same key codes the game's SDL event loop reads.
+    document.querySelectorAll('[data-key]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var code = Number(button.dataset.key);
+        ['keydown', 'keyup'].forEach(function (type) {
+          document.dispatchEvent(new KeyboardEvent(type, { keyCode: code, which: code, bubbles: true }));
+        });
+        canvas.focus();
+      });
+    });
+    document.getElementById('restart').addEventListener('click', function () { location.reload(); });
+    canvas.addEventListener('click', function () { canvas.focus(); });
+  </script>
+  <script src="snake.js"></script>
+</body>
+</html>
