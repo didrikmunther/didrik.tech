@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>St Bernand Script (2016) — run it</title>
+  <link rel="stylesheet" href="/run/run.css">
+</head>
+<body>
+  <div class="page">
+    <p class="intro"><strong>St Bernand Script, January 2016.</strong> The original C++ lexer, parser and evaluator, compiled to WebAssembly.
+      It has operator precedence, <code>**</code>, comparisons and booleans, and when it can't parse a line it points at the token and lists what it expected. Try breaking it. <span id="status" class="status">Loading…</span></p>
+    <div class="chips" id="examples" aria-label="Examples"></div>
+    <div class="term-wrap">
+      <pre class="term-log" id="log" aria-live="polite"></pre>
+      <div class="term-line"><span aria-hidden="true">&gt;</span><input class="term" id="input" aria-label="St Bernand Script input" autocomplete="off" spellcheck="false" disabled></div>
+    </div>
+  </div>
+  <script src="stbernand.js"></script>
+  <script type="module">
+    import { mountRepl } from '/run/repl.js';
+    mountRepl({
+      factory: () => StBernand(),
+      evaluate: 'stbernand_eval',
+      examples: ['x = 5', 'x * x', '2 ** 10', '(1 + 2) * 3 == 9', '10 % 3', '1 + * 2']
+    });
+  </script>
+</body>
+</html>

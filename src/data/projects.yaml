@@ -53,6 +53,9 @@ projects:
 
   - title: 'Programming language'
     id: 'rostlang'
+    run:
+      src: '/rost/'
+      hint: 'Edit Rost code and compile it to WebAssembly'
     year: '2022'
     tech: 'Rust'
     img: './static/rustlang.webp'
@@ -64,10 +67,13 @@ projects:
 
   - title: 'Web Audio API Synth'
     id: 'websynth'
+    run:
+      src: '/audio/'
+      hint: 'Mouse, plus a MIDI keyboard if you have one'
     year: '2020'
     tech: 'React · Web Audio'
     img: './static/audio.webp'
-    url: '/audio'
+    url: 'https://github.com/didrikmunther/react-audiocontext'
     target: '_blank'
     text:
       - A digital synthensizer with an oscillator and plugins with support for external MIDI-units.
@@ -75,10 +81,13 @@ projects:
 
   - title: 'Flappy Bird AI'
     id: 'flappy'
+    run:
+      src: '/flappy/'
+      hint: 'Watch it learn'
     year: '2020'
     tech: 'TypeScript'
     img: './static/flappy.webp'
-    url: '/flappy'
+    url: 'https://github.com/didrikmunther/flappyai'
     target: '_blank'
     text:
       - An evolutionary neural network which learns to play Flappy Bird in the browser.
@@ -86,6 +95,9 @@ projects:
 
   - title: 'KTH Formula Student Driverless'
     id: 'kthfsdv'
+    run:
+      src: '/kthfsdv/'
+      hint: 'Python in the browser, about 16 MB'
     year: '2019'
     tech: 'ROS · Python · matplotlib'
     img: './static/kthfsdv.webp'
@@ -97,6 +109,9 @@ projects:
 
   - title: 'Rust browser engine'
     id: 'rustbrowser'
+    run:
+      src: '/rust-browser/'
+      hint: 'Type HTML, watch it parse'
     year: '2018'
     tech: 'Rust'
     img: './static/rustbrowser.webp'
@@ -142,6 +157,9 @@ projects:
 
   - title: 'St Bernand Script'
     id: 'stbernand'
+    run:
+      src: '/stbernand/'
+      hint: 'A REPL, try to break it'
     year: '2016'
     tech: 'C++'
     img: './static/stbernand.webp'
@@ -153,6 +171,9 @@ projects:
 
   - title: 'DevilScript'
     id: 'devilscript'
+    run:
+      src: '/devilscript/'
+      hint: 'A REPL'
     year: '2015'
     tech: 'C++'
     img: './static/devilscript.webp'
@@ -164,6 +185,9 @@ projects:
 
   - title: 'Markov chain'
     id: 'markov'
+    run:
+      src: '/markov/'
+      hint: 'Python in the browser, about 6 MB'
     year: '2015'
     tech: 'Python · BeautifulSoup'
     img: './static/markov.webp'
@@ -175,10 +199,14 @@ projects:
 
   - title: '2-D Platformer Engine'
     id: 'platformer'
+    run:
+      src: '/third/'
+      hint: 'Keyboard and mouse, about 20 MB'
     year: '2014'
     tech: 'C++ · Lua · WebAssembly'
     img: './static/third.webp'
-    url: '/third/'
+    url: 'https://github.com/didrikmunther/Third'
+    target: '_blank'
     linkDescription: 'Ported from 2014 C++ to WASM using 2026 Claude.'
     text:
       - Third is a platformer engine built in C++ with a built-in map editor and Lua scripting.
@@ -186,6 +214,9 @@ projects:
 
   - title: 'Snake'
     id: 'snake'
+    run:
+      src: '/snake/'
+      hint: 'Arrow keys, or the on-screen buttons'
     year: '2013'
     tech: 'C++ · SDL'
     img: './static/snake.webp'

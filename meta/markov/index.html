@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markov chain (2015) — run it</title>
+  <link rel="stylesheet" href="/run/run.css">
+  <style>
+    .lines { list-style: none; margin: 0; padding: 12px 16px; overflow: auto; flex: 1; }
+    .lines li { padding: 8px 0; border-bottom: 1px solid var(--line); color: var(--ok); font: 15px/1.5 "SF Mono", Menlo, monospace; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <p class="intro"><strong>The 2015 Markov chain, running in Python in your browser.</strong>
+      These are the chain functions from <code>Markov.py</code>, unchanged. In 2015 they learned from Reddit comment threads; here they start from this site's blog posts. Paste any text on the left to train it on something else. <span id="status" class="status"></span></p>
+    <div class="panes">
+      <div class="pane"><h2>Training text, one sentence per line</h2><textarea id="corpus" spellcheck="false" aria-label="Training text"></textarea></div>
+      <div class="pane"><h2>Generated</h2><ul class="lines" id="out" aria-live="polite"></ul></div>
+    </div>
+    <div class="row">
+      <button class="go" id="go" disabled>Generate</button>
+      <button class="go" id="reset" style="background:transparent;border:1px solid var(--line)">Back to the blog posts</button>
+    </div>
+  </div>
+  <script type="module">
+    import { loadPython } from '/run/pyodide.js';
+    const $ = id => document.getElementById(id);
+    const status = text => { $('status').textContent = text; };
+
+    const blog = await (await fetch('blog-sentences.txt')).text();
+    $('corpus').value = blog;
+    const source = await (await fetch('Markov.py')).text();
+
+    let python;
+    try {
+      python = await loadPython(status);
+    } catch (error) {
+      status(error.message); throw error;
+    }
+
+    // The scraping half of Markov.py is Python 2 and fetches 2015 Reddit pages,
+    // so only the chain functions are loaded: from blocked_chars up to the URL helpers.
+    const chain = source.slice(source.indexOf('blocked_chars'), source.indexOf('def urlEncodeNonAscii'));
+    python.runPython('import random, warnings\nwarnings.filterwarnings("ignore")');
+    python.runPython(chain);
+    python.runPython(`
+def train(text):
+    main_chain.clear()
+    for sentence in text.split("\\n"):
+        if sentence.strip():
+            add_words(main_chain, sentence.strip())
+
+def generate(count):
+    out = []
+    tries = 0
+    while len(out) < count and tries < 500:
+        tries += 1
+        s = print_chain(main_chain).strip()
+        if 4 <= len(s.split()) <= 30:
+            out.append(s)
+    return out
+`);
+
+    function generate() {
+      python.globals.get('train')($('corpus').value);
+      const lines = python.globals.get('generate')(6).toJs();
+      $('out').replaceChildren(...lines.map(text => Object.assign(document.createElement('li'), { textContent: text })));
+    }
+
+    $('go').addEventListener('click', generate);
+    $('reset').addEventListener('click', () => { $('corpus').value = blog; generate(); });
+    $('go').disabled = false;
+    status('');
+    generate();
+  </script>
+</body>
+</html>

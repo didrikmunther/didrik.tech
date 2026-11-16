@@ -1,0 +1,39 @@
+/* Shared look for the runnable project pages that open in the projects-page modal. */
+:root {
+  --bg: #1b2027; --panel: #22272e; --line: #2f3640; --fg: #d7dde5; --dim: #8b96a3;
+  --accent: #9b2c2c; --ok: #8fd98f; --tag: #7fb3ff; --attr: #c9a0ff; --str: #8fd98f; --err: #ff9a9a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.mono, pre, textarea, input.term { font-family: "SF Mono", Menlo, Consolas, monospace; }
+.page { display: flex; flex-direction: column; height: 100%; padding: 18px 22px; gap: 14px; }
+.intro { color: var(--dim); font-size: 14px; margin: 0; }
+.intro strong { color: var(--fg); font-weight: 600; }
+.panes { display: flex; gap: 14px; flex: 1; min-height: 0; }
+.pane { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.pane h2 { margin: 0; padding: 8px 12px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--dim); border-bottom: 1px solid var(--line); font-weight: 600; }
+textarea { flex: 1; border: 0; padding: 12px; resize: none; background: transparent; color: var(--fg);
+  font-size: 13.5px; line-height: 1.6; outline: none; }
+.out { flex: 1; overflow: auto; padding: 12px; margin: 0; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap; }
+button.go { align-self: flex-start; padding: 9px 16px; border: 0; border-radius: 4px; background: var(--accent);
+  color: #fff; font-weight: 700; font-size: 14px; cursor: pointer; }
+button.go:hover { filter: brightness(1.15); }
+button.go:focus-visible, textarea:focus-visible, input.term:focus-visible { outline: 2px solid var(--tag); outline-offset: 2px; }
+.t { color: var(--tag); } .a { color: var(--attr); } .s { color: var(--str); } .d { color: var(--dim); } .e { color: var(--err); }
+@media (max-width: 700px) { .panes { flex-direction: column; } }
+
+/* Terminal pages (the REPLs). */
+.term-wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.term-log { flex: 1; overflow: auto; margin: 0; padding: 14px 16px; font-size: 14.5px; line-height: 1.65; white-space: pre-wrap; }
+.term-line { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-top: 1px solid var(--line); }
+.term-line span { color: var(--dim); }
+input.term { flex: 1; border: 0; background: transparent; color: var(--fg); font-size: 14.5px; outline: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { padding: 4px 10px; border: 1px solid var(--line); border-radius: 4px; background: transparent;
+  color: var(--fg); cursor: pointer; font: 13px "SF Mono", Menlo, monospace; }
+.chips button:hover { border-color: var(--dim); }
+.status { color: var(--dim); font-size: 13px; }

@@ -36,4 +36,16 @@
         {% endif %}
       {% endfor %}
     </section>
+
+    <dialog id="run-dialog" class="run-dialog" aria-labelledby="run-title">
+      <div class="run-head">
+        <div class="run-heading">
+          <h2 id="run-title" dir="auto"></h2>
+          <p id="run-hint"></p>
+        </div>
+        <a id="run-newtab" class="run-newtab" href="#" target="_blank">Open in a new tab</a>
+        <button type="button" id="run-close" class="run-close" aria-label="Close">&times;</button>
+      </div>
+      <iframe id="run-frame" title="Running project" allow="midi; autoplay; fullscreen; gamepad"></iframe>
+    </dialog>
 </main>

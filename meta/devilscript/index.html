@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DevilScript (2015) — run it</title>
+  <link rel="stylesheet" href="/run/run.css">
+  <style>.banner { display: block; line-height: 2.6; }</style>
+</head>
+<body>
+  <div class="page">
+    <p class="intro"><strong>DevilScript, October 2015 — my first programming language.</strong> The original C++ interpreter, compiled to WebAssembly.
+      It knows variables, <code>+ - * /</code> and <code>ptc!</code> to print a line. Type below or try an example. <span id="status" class="status">Loading…</span></p>
+    <div class="chips" id="examples" aria-label="Examples"></div>
+    <div class="term-wrap">
+      <pre class="term-log" id="log" aria-live="polite"></pre>
+      <div class="term-line"><span aria-hidden="true">&gt;</span><input class="term" id="input" aria-label="DevilScript input" autocomplete="off" spellcheck="false" disabled></div>
+    </div>
+  </div>
+  <script src="devilscript.js"></script>
+  <script type="module">
+    import { mountRepl } from '/run/repl.js';
+    mountRepl({
+      factory: () => DevilScript(),
+      evaluate: 'devilscript_eval',
+      banner: module => module.cwrap('devilscript_banner', 'string', [])(),
+      examples: ['a = 5', 'b = 10', 'c = a + b', 'c / 4', 'ptc! Hello from 2015', 'restart!']
+    });
+  </script>
+</body>
+</html>
