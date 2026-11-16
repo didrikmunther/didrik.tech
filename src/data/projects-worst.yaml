@@ -1,0 +1,118 @@
+# Worst-case fixture for the projects timeline. Dev-only: scripts/break-ui.sh
+# renders the page against this instead of projects.yaml. Every value here is
+# something a real project entry could plausibly contain — a German compound
+# name, a repo URL inside a sentence, a title with an ampersand, a project
+# whose screenshot was never taken — not random noise.
+projects:
+  - title: 'Benachrichtigungseinstellungen-Konfigurator'
+    id: 'german'
+    year: '2026'
+    tech: 'TypeScript · React · Redux Toolkit · Tailwind · Playwright · Vitest · Storybook'
+    img: './static/rustlang.webp'
+    url: 'https://github.com/didrikmunther'
+    target: '_blank'
+    text:
+      - A notification settings configurator for a German client. The longest word here is a single unbreakable token, which is what a compound noun looks like to a browser.
+      - 'Repository: https://github.com/didrikmunther/benachrichtigungseinstellungen-konfigurator-frontend'
+
+  - title: 'Q3 "Final" Report & Analytics <v2>'
+    id: 'punctuation'
+    year: '2026'
+    tech: 'Python'
+    img: './static/kthformulastudent.webp'
+    url: 'https://example.com/'
+    target: '_blank'
+    text:
+      - A title carrying a quote, an ampersand and angle brackets. The page renders titles with the safe filter, so this is the value that tells you whether that is still sound.
+
+  - title: 'J'
+    id: 'oneletter'
+    year: '2025'
+    tech: 'C'
+    img: './static/third.webp'
+    url: 'https://example.com/'
+    target: '_blank'
+    text:
+      - A one-letter project name.
+
+  - title: '🦊 Fox Tracker'
+    id: 'emoji'
+    year: '2025'
+    img: './static/flappy.webp'
+    url: 'https://example.com/'
+    target: '_blank'
+    text:
+      - An entry with no tech line at all, since tech is optional in the data.
+
+  - title: '王秀英的作品集'
+    id: 'cjk'
+    year: '2024'
+    tech: 'Go'
+    img: './static/audio.webp'
+    url: 'https://example.com/'
+    target: '_blank'
+    text:
+      - Chinese has no spaces between words, so the browser may break the line anywhere in it.
+
+  - title: 'Đặng Thị Ngọc Hân — portfolio and booking system'
+    id: 'vietnamese'
+    year: '2024'
+    tech: 'Next.js · Postgres'
+    img: './static/nyahjul.webp'
+    url: 'https://example.com/'
+    target: '_blank'
+    text:
+      - Stacked Vietnamese diacritics sit above and below the line, so a tight line height clips them.
+
+  - title: 'Project with no screenshot yet'
+    id: 'noimage'
+    year: '2023'
+    tech: 'Rust'
+    url: 'https://example.com/'
+    target: '_blank'
+    text:
+      - An entry added before its screenshot was taken, which is how half of these start.
+
+  - title: 'Research notes'
+    id: 'longtext'
+    year: '2022'
+    tech: 'LaTeX'
+    img: './static/valladack.webp'
+    url: 'https://example.com/'
+    linkDescription: 'A link description long enough to run past the short note it was designed for, the way a caption does once someone explains the caveat properly.'
+    text:
+      - >
+        A pasted abstract, the length people actually paste. Compiler construction for a statically typed language targeting
+        several backends, with a type checker that recovers from errors so the editor keeps working on a broken file. The
+        parser is recursive descent, the intermediate representation is a flat instruction list, and the WebAssembly backend
+        emits a module per compilation unit. The evaluation compares compile times against reference implementations across a
+        corpus of two hundred programs, measures the size of the emitted modules, and reports where the recovering type checker
+        produces worse diagnostics than a failing one. The conclusion is that error recovery is worth the complexity for editor
+        integration and not worth it for batch compilation, which is roughly what everyone expected before the measurements,
+        but the numbers now exist and the thresholds are specific rather than folkloric.
+      - A second paragraph, because one was never going to be enough.
+
+  - title: 'نور الهدى'
+    id: 'rtl'
+    year: '2021'
+    tech: 'Swift'
+    img: './static/mikinglsp.webp'
+    url: 'https://example.com/'
+    target: '_blank'
+    text:
+      - An Arabic project name on a page with no direction handling.
+
+  - title: 'Untitled'
+    id: 'notext'
+    year: '2020'
+    tech: 'Shell'
+    img: './static/rustbrowser.webp'
+    url: 'https://example.com/'
+    text: []
+
+  - title: 'More projects on GitHub'
+    id: 'more'
+    url: 'https://github.com/didrikmunther'
+    target: '_blank'
+    text:
+      - Many more of my personal projects are on GitHub.

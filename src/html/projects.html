@@ -6,3 +6,6 @@ footerColor: bg-gray-800
 {% block content %}
 {% include '../pages/projects.html' %}
 {% endblock %}
+{% block scripts %}
+<script src="./timeline.js?v={{ version }}" defer></script>
+{% endblock %}
