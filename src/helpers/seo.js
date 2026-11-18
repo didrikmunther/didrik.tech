@@ -1,4 +1,32 @@
+const { execFileSync } = require('child_process');
+const path = require('path');
+
 const getYaml = require('../_helpers/getYalm');
+
+const root = path.join(__dirname, '../..');
+
+// Pages without dates in their front matter take the date of the last commit
+// that touched their sources, so the sitemap's lastmod follows real edits.
+const pageSources = {
+    '/': ['src/html/index.html', 'src/pages/index.html'],
+    '/blog/': ['src/html/blog.html', 'src/pages/blog.html'],
+    '/contact/': ['src/html/contact.html', 'src/pages/contact.html'],
+    '/projects/': ['src/html/projects.html', 'src/pages/projects.html', 'src/data/projects.yaml']
+};
+
+// Returns YYYY-MM-DD, or undefined when git history is unavailable. A shallow
+// clone would date every page to its single commit, so treat that as unknown.
+const gitDate = files => {
+    try {
+        const run = args => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+        if (run(['rev-parse', '--is-shallow-repository']) === 'true') return undefined;
+        return run(['log', '-1', '--format=%cs', '--', ...files]) || undefined;
+    } catch (error) {
+        return undefined;
+    }
+};
+
+const newest = dates => dates.filter(Boolean).sort().pop();
 
 module.exports = async (site, cb) => {
     try {
@@ -53,11 +81,22 @@ module.exports = async (site, cb) => {
             };
         });
 
+        const postDates = pages
+            .filter(page => page.postTitle)
+            .map(page => page.dateModified || page.datePublished);
+        const fallbackLastmod = page => {
+            const sources = pageSources[page.url];
+            if (!sources) return undefined;
+            // The blog listing changes whenever a post does.
+            if (page.url === '/blog/') return newest([...postDates, gitDate(sources)]);
+            return gitDate(sources);
+        };
+
         const sitemapEntries = pages
             .filter(page => page.seo && page.sitemap !== false)
             .map(page => ({
                 url: page.seo.canonicalUrl,
-                lastmod: page.dateModified || page.datePublished,
+                lastmod: page.dateModified || page.datePublished || fallbackLastmod(page),
                 images: page.seo.images
             }));
 

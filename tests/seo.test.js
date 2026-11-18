@@ -81,6 +81,10 @@ test('robots and sitemap advertise every canonical page', () => {
     assert.deepEqual(locations.sort(), urls.map(url => origin + url).sort());
     for (const entry of entries) {
         const url = entry.match(/<loc>([^<]+)<\/loc>/)[1];
+        const lastmod = entry.match(/<lastmod>([^<]+)<\/lastmod>/);
+        assert(lastmod, `${url} must have a lastmod`);
+        assert.match(lastmod[1], /^\d{4}-\d{2}-\d{2}$/);
+        assert(Date.parse(lastmod[1]) <= Date.now(), `${url} lastmod must not be in the future`);
         const html = readPage(new URL(url).pathname);
         assert.equal(canonical(html), url);
         if (posts.some(post => url.endsWith(`/blog/${post}/`))) {
